@@ -1,109 +1,91 @@
-<ion-header [translucent]="true">
-    <ion-toolbar>
-        <ion-title>
-            Blank
-        </ion-title>
-    </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-    <ion-header collapse="condense">
-        <ion-toolbar>
-            <ion-title size="large">Blank</ion-title>
-        </ion-toolbar>
-    </ion-header>
-    <ion-grid>
-        <ion-row>
-            <ion-col>
-                <mat-form-field>
-                    <mat-label>OPC-UA Server</mat-label>
-                    <mat-select>
-                        <mat-option *ngFor="let server of servers" [value]="server.value">
-                            {{server.viewValue}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </ion-col>
-            <ion-col>
-                <mat-form-field>
-                    <mat-label>Namespace</mat-label>
-                    <mat-select>
-                        <mat-option *ngFor="let namespace of namespaces" [value]="namespace.value">
-                            {{namespace.viewValue}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-    <mat-divider></mat-divider>
-    <ion-grid>
-        <ion-row>
-            <ion-col>
-                <ion-list-header>
-                    <ion-label>Namespace</ion-label>
-                </ion-list-header>
-                <ion-list>
-                    <ion-item>
-                        <ion-label>Server</ion-label>
-                        <ion-icon name="cube" slot="start"></ion-icon>
-                        <ion-button>
-                            <ion-icon name="copy-outline"></ion-icon>
-                        </ion-button>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label>Matrix</ion-label>
-                        <ion-icon name="cube" slot="start"></ion-icon>
-                        <ion-button>
-                            <ion-icon name="copy-outline"></ion-icon>
-                        </ion-button>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label>My Devices</ion-label>
-                        <ion-icon name="folder" slot="start"></ion-icon>
-                        <ion-button>
-                            <ion-icon name="copy-outline"></ion-icon>
-                        </ion-button>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label>Position</ion-label>
-                        <ion-icon name="cube" slot="start"></ion-icon>
-                        <ion-button>
-                            <ion-icon name="copy-outline"></ion-icon>
-                        </ion-button>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label>Device Set</ion-label>
-                        <ion-icon name="cube" slot="start"></ion-icon>
-                        <ion-button>
-                            <ion-icon name="copy-outline"></ion-icon>
-                        </ion-button>
-                    </ion-item>
-                </ion-list>
-            </ion-col>
-            <ion-col>
-                <ion-list-header>
-                    <ion-label>Atributes</ion-label>
-                </ion-list-header>
-                <ion-list>
-                    <ion-item>
-                        <ion-label>Value</ion-label>
-                        <ion-label color="primary">1000</ion-label>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label>Mega Man X</ion-label>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label>The Legend of Zelda</ion-label>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label>Pac-Man</ion-label>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label>Super Mario World</ion-label>
-                    </ion-item>
-                </ion-list>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+    <ion-card>
+        <ion-card-header>
+            <ion-grid>
+                <ion-row>
+                    <ion-col>
+                        <ion-card-title class="konektiloTitle">OPC-UA Browser</ion-card-title>
+                    </ion-col>
+                    <ion-col>
+                        <ion-img class="logoStyle" src="./assets/konektilo-logo.png"></ion-img>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+
+        </ion-card-header>
+    </ion-card>
+    <ion-card>
+        <ion-grid>
+            <ion-row>
+                <ion-segment scrollable>
+                    <ion-col>
+                        <ion-item>
+                            <ion-label>OPC-UA Server</ion-label>
+                            <ion-select interface="popover">
+                                <ion-select-option *ngFor="let server of servers" [value]="server.value">{{server.viewValue}}</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item>
+                            <ion-label>Namespace</ion-label>
+                            <ion-select interface="popover">
+                                <ion-select-option *ngFor="let namespace of namespaces" [value]="namespace.value">{{namespace.viewValue}}</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-segment (ionChange)="onCategoryChange($event)">
+                            <ion-segment-button *ngFor="let category of categories" value={{category}}>
+                                <ion-label>{{category}}</ion-label>
+                            </ion-segment-button>
+                        </ion-segment>
+                    </ion-col>
+                </ion-segment>
+            </ion-row>
+        </ion-grid>
+        <mat-divider></mat-divider>
+        <ion-grid>
+            <ion-row>
+                <ion-col>
+                    <ion-list-header>
+                        <ion-label>Namespace</ion-label>
+                        <ion-label></ion-label>
+                    </ion-list-header>
+                    <ion-list *ngFor="let item of items" [value]="item">
+                        <ion-item>
+                            <ion-label>{{item}}</ion-label>
+                            <ion-icon name="cube" slot="start"></ion-icon>
+                            <ion-button>
+                                <ion-icon name="copy-outline"></ion-icon>
+                            </ion-button>
+                        </ion-item>
+                    </ion-list>
+                </ion-col>
+                <ion-col>
+                    <ion-list-header>
+                        <ion-label>Atributes</ion-label>
+                    </ion-list-header>
+                    <ion-list>
+                        <ion-item>
+                            <ion-label>Value</ion-label>
+                            <ion-label color="primary">1000</ion-label>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Mega Man X</ion-label>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>The Legend of Zelda</ion-label>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Pac-Man</ion-label>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Super Mario World</ion-label>
+                        </ion-item>
+                    </ion-list>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-card>
 </ion-content>

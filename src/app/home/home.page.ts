@@ -15,16 +15,25 @@ interface Namespace {
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+
+  categories = ['fanspeed', '1', '2', 'speed', 'more'];
+
+  items = ['matrix', 'My Devices', 'Server', 'Data'];
+
   servers: Server[] = [
-    {value: 'opcauatestserver', viewValue: 'OPC-UA Testserver'},
-    {value: 'michisserver', viewValue: 'Michael Test Server'},
-    {value: 'romansserver', viewValue: 'Roman Test Server'}
+    {value: 'opcauatestserver', viewValue: 'Testserver'},
+    {value: 'michisserver', viewValue: 'MS Server'},
+    {value: 'romansserver', viewValue: 'Apple Server'}
   ];
   namespaces: Namespace[] = [
-    {value: 'namespace1', viewValue: 'Namespace 1'},
-    {value: 'namespace2', viewValue: 'Namespace 2'},
-    {value: 'namespace3', viewValue: 'Namespace 3'}
+    {value: 'namespace1', viewValue: '1'},
+    {value: 'namespace2', viewValue: '2'},
+    {value: 'namespace3', viewValue: '3'}
   ];
   constructor() {}
+
+  onCategoryChange(category){
+
+  };
 
 }
