@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {BrowsePoint} from "../../models/BrowsePoint";
 import {KonektiloOpcUaServer} from "../../models/KonektiloOpcUaServer";
 import {KonektiloResponse} from "../../models/KonektiloResponse";
+import {KonektiloNamespace} from "../../models/KonektiloNamespace";
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,10 @@ export class KonektiloBrowserService {
 
   readOpcUaServer(): Observable<KonektiloResponse<KonektiloOpcUaServer>> {
     return this.http.get<KonektiloResponse<KonektiloOpcUaServer>>(this.urlBuilder(BrowsePoint.Server));
+  }
+
+  readNamespaces(opcUaServer: string): Observable<KonektiloResponse<KonektiloNamespace>> {
+    return this.http.get<KonektiloResponse<KonektiloNamespace>>(this.urlBuilder(BrowsePoint.Namespace, opcUaServer));
   }
 
   // readNode(opcUaServer: string, namespace: number, identifier: string): Observable<KonektiloResponse> {

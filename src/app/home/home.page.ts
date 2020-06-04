@@ -1,11 +1,7 @@
 import {Component} from '@angular/core';
 import {KonektiloOpcUaServer} from "../models/KonektiloOpcUaServer";
 import {KonektiloBrowserService} from "../services/konektilo-browser/konektilo-browser.service";
-
-interface Namespace {
-  value: string;
-  viewValue: string;
-}
+import {KonektiloNamespace} from "../models/KonektiloNamespace";
 
 @Component({
   selector: 'app-home',
@@ -14,32 +10,43 @@ interface Namespace {
 })
 export class HomePage {
   opcUaServer: KonektiloOpcUaServer[] = [];
+  namespaces: KonektiloNamespace[] = []
+
   selectedOpcUaServer: KonektiloOpcUaServer;
+  selectedNamespace: KonektiloNamespace;
 
   categories = ['fanspeed', '1', '2', 'speed', 'more'];
 
   items = ['matrix', 'My Devices', 'Server', 'Data'];
 
-  namespaces: Namespace[] = [
-    {value: 'namespace1', viewValue: '1'},
-    {value: 'namespace2', viewValue: '2'},
-    {value: 'namespace3', viewValue: '3'}
-  ];
-
   constructor(public konektiloBrowser: KonektiloBrowserService) {
     this.konektiloBrowser.readOpcUaServer().subscribe(konektiloResponse => {
-      for(let prop in konektiloResponse.result){
+      for (let prop in konektiloResponse.result) {
         this.opcUaServer.push(konektiloResponse.result[prop]);
       }
     });
   }
 
-  opcUaServerSelected() {
-    console.log(this.selectedOpcUaServer);
+  fetchNamespaces() {
+    this.konektiloBrowser.readNamespaces(this.selectedOpcUaServer.name).subscribe(konektiloResponse => {
+      this.namespaces = [];
+      for (let prop in konektiloResponse.result) {
+        this.namespaces.push(konektiloResponse.result[prop]);
+      }
+    });
   }
 
-  compareOpcUaServer(s1: KonektiloOpcUaServer, s2: KonektiloOpcUaServer): boolean{
+  fetchNodes() {
+    // TODO
+    console.log(this.selectedNamespace);
+  }
+
+  compareOpcUaServer(s1: KonektiloOpcUaServer, s2: KonektiloOpcUaServer): boolean {
     return s1.name === s2.name;
+  }
+
+  compareNamespaces(s1: KonektiloNamespace, s2: KonektiloNamespace): boolean {
+    return s1.number === s2.number;
   }
 
   onCategoryChange(category) {
