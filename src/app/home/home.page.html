@@ -31,18 +31,27 @@
           <ion-col>
             <ion-item>
               <ion-label>Folder</ion-label>
-              <ion-select interface="popover" [(ngModel)]="selectedFolder" [compareWith]="compareNamespaces"
-                          [disabled]="selectFolderDisabled"
-                          (ionChange)="readBaseNodes()">
-                <ion-select-option *ngFor="let folder of opcUaFolders"
-                                   [value]="folder">{{folder.name}}</ion-select-option>
+              <ion-select interface="popover" [(ngModel)]="selectedRootNode" [compareWith]="compareBrowseNodes"
+                          [disabled]="selectRootNodeDisabled"
+                          (ionChange)="selectRootNode($event.detail.value)">
+                <ion-select-option *ngFor="let folder of rootNodes"
+                                   [value]="folder">{{folder.displayName}}</ion-select-option>
               </ion-select>
             </ion-item>
           </ion-col>
+        </ion-segment>
+      </ion-row>
+      <ion-row>
+        <ion-segment scrollable>
           <ion-col>
-            <ion-segment (ionChange)="onCategoryChange($event)">
-              <ion-segment-button *ngFor="let category of categories" value={{category}}>
-                <ion-label>{{category}}</ion-label>
+            <ion-segment (ionChange)="onNodeChange($event.detail.value)" [(ngModel)]="selectedNavbarNode">
+              <ion-segment-button [value]="selectedRootNode" (click)="selectRootNode(selectedRootNode)">
+                <ion-icon name="home"></ion-icon>
+              </ion-segment-button>
+              <ion-segment-button *ngFor="let konektiloBrowseNode of browsingHistory" [value]="konektiloBrowseNode"
+                                  layout="icon-start">
+                <ion-icon name="caret-forward"></ion-icon>
+                <ion-label>{{konektiloBrowseNode.displayName}}</ion-label>
               </ion-segment-button>
             </ion-segment>
           </ion-col>
@@ -54,8 +63,7 @@
       <ion-row>
         <ion-col>
           <ion-list-header>
-            <ion-label>{{selectedFolder?.name}}</ion-label>
-            <ion-label></ion-label>
+            <ion-label>{{selectedRootNode?.name}}</ion-label>
           </ion-list-header>
           <ion-list *ngFor="let visibleNode of visibleNodes">
             <ion-item detail="true" (click)="browseChildren(visibleNode)">
@@ -65,7 +73,7 @@
               <ion-icon *ngIf="visibleNode.class === 4" name="build" slot="start"></ion-icon>
               <ion-icon *ngIf="visibleNode.class !== 1 && visibleNode.class !== 2 && visibleNode.class !== 4"
                         name="cube" slot="start"></ion-icon>
-              <ion-button>
+              <ion-button *ngIf="visibleNode.class === 2 || visibleNode.class === 4">
                 <ion-icon name="copy-outline"></ion-icon>
               </ion-button>
             </ion-item>

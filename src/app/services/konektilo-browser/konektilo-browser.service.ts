@@ -29,18 +29,18 @@ export class KonektiloBrowserService {
     return this.http.get<KonektiloResponse<KonektiloBrowseNode>>(opcUaServerBrowseUrl);
   }
 
-  readBaseNode(opcUaServerBrowseUrl: string, namespace: number, identifier: string): Observable<KonektiloResponse<KonektiloBrowseNode>> {
+  readRootNode(opcUaServerBrowseUrl: string, namespace: number, identifier: string | number): Observable<KonektiloResponse<KonektiloBrowseNode>> {
     return this.http.get<KonektiloResponse<KonektiloBrowseNode>>(this.urlBuilder(BrowsePoint.Node, opcUaServerBrowseUrl, namespace, identifier));
   }
 
-  private urlBuilder(browsePoint: BrowsePoint, opcUaServerBrowseUrl?: string, namespace?: number, identifier?: string): string {
+  private urlBuilder(browsePoint: BrowsePoint, opcUaServerBrowseUrl?: string, namespace?: number, identifier?: string| number): string {
     let url = this.konektiloBaseUrl + ':' + this.konektiloPort + '/api/' + this.apiVersion + '/server';
     switch (browsePoint) {
       // case BrowsePoint.Namespace:
       //   url += '/' + opcUaServer + '/namespace';
       //   break;
       case BrowsePoint.Node:
-        url = opcUaServerBrowseUrl + '/' + namespace.toString() + '/browse/' + identifier;
+        url = opcUaServerBrowseUrl + '/' + namespace.toString() + '/browse/' + identifier.toString();
         break;
     }
     return url;
