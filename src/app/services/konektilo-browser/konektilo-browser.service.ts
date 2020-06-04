@@ -25,8 +25,12 @@ export class KonektiloBrowserService {
   //   return this.http.get<KonektiloResponse<KonektiloNamespace>>(this.urlBuilder(BrowsePoint.Namespace, opcUaServer));
   // }
 
-  readNode(opcUaServerBrowseUrl: string, namespace: number, identifier: string): Observable<KonektiloResponse<any>> {
-    return this.http.get<KonektiloResponse<KonektiloNamespace>>(this.urlBuilder(BrowsePoint.Node, opcUaServerBrowseUrl, namespace, identifier));
+  readNode(opcUaServerBrowseUrl: string): Observable<KonektiloResponse<KonektiloBrowseNode>> {
+    return this.http.get<KonektiloResponse<KonektiloBrowseNode>>(opcUaServerBrowseUrl);
+  }
+
+  readBaseNode(opcUaServerBrowseUrl: string, namespace: number, identifier: string): Observable<KonektiloResponse<KonektiloBrowseNode>> {
+    return this.http.get<KonektiloResponse<KonektiloBrowseNode>>(this.urlBuilder(BrowsePoint.Node, opcUaServerBrowseUrl, namespace, identifier));
   }
 
   private urlBuilder(browsePoint: BrowsePoint, opcUaServerBrowseUrl?: string, namespace?: number, identifier?: string): string {

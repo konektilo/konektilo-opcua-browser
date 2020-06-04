@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {KonektiloOpcUaServer} from "../models/KonektiloOpcUaServer";
 import {KonektiloBrowserService} from "../services/konektilo-browser/konektilo-browser.service";
-import {KonektiloNamespace} from "../models/KonektiloNamespace";
 
 @Component({
   selector: 'app-home',
@@ -14,6 +13,7 @@ export class HomePage {
     {name: 'Objects', namespace: 0, identifier: '85'},
     {name: 'Types', namespace: 0, identifier: '86'},
     {name: 'Views', namespace: 0, identifier: '87'}]
+  visibleNodes: KonektiloBrowseNode[] = [];
 
   selectedOpcUaServer: KonektiloOpcUaServer;
   selectedFolder: any;
@@ -21,8 +21,6 @@ export class HomePage {
   selectFolderDisabled = true;
 
   categories = ['fanspeed', '1', '2', 'speed', 'more'];
-
-  items = ['matrix', 'My Devices', 'Server', 'Data'];
 
   constructor(public konektiloBrowser: KonektiloBrowserService) {
     this.konektiloBrowser.readOpcUaServer().subscribe(konektiloResponse => {
@@ -37,9 +35,21 @@ export class HomePage {
   }
 
   readBaseNodes() {
-    this.konektiloBrowser.readNode(this.selectedOpcUaServer.browseUrl, this.selectedFolder.namespace, this.selectedFolder.identifier).subscribe(test => {
-        console.log(test);
+    this.konektiloBrowser.readBaseNode(this.selectedOpcUaServer.browseUrl, this.selectedFolder.namespace, this.selectedFolder.identifier).subscribe(konektiloResponse => {
+      this.visibleNodes = [];
+      for (let prop in konektiloResponse.result) {
+        this.visibleNodes.push(konektiloResponse.result[prop]);
+      }
     });
+  }
+
+  browseChildren(konektiloBrowseNode: KonektiloBrowseNode) {
+    this.konektiloBrowser.readNode(konektiloBrowseNode.browseUrl).subscribe(konektiloResponse => {
+      this.visibleNodes = [];
+      for (let prop in konektiloResponse.result) {
+        this.visibleNodes.push(konektiloResponse.result[prop]);
+      }
+    })
   }
 
   compareOpcUaServer(s1: KonektiloOpcUaServer, s2: KonektiloOpcUaServer): boolean {

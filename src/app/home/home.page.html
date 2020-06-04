@@ -31,7 +31,8 @@
           <ion-col>
             <ion-item>
               <ion-label>Folder</ion-label>
-              <ion-select interface="popover" [(ngModel)]="selectedFolder" [compareWith]="compareNamespaces" [disabled]="selectFolderDisabled"
+              <ion-select interface="popover" [(ngModel)]="selectedFolder" [compareWith]="compareNamespaces"
+                          [disabled]="selectFolderDisabled"
                           (ionChange)="readBaseNodes()">
                 <ion-select-option *ngFor="let folder of opcUaFolders"
                                    [value]="folder">{{folder.name}}</ion-select-option>
@@ -53,13 +54,17 @@
       <ion-row>
         <ion-col>
           <ion-list-header>
-            <ion-label>Namespace</ion-label>
+            <ion-label>{{selectedFolder?.name}}</ion-label>
             <ion-label></ion-label>
           </ion-list-header>
-          <ion-list *ngFor="let item of items">
-            <ion-item>
-              <ion-label>{{item}}</ion-label>
-              <ion-icon name="cube" slot="start"></ion-icon>
+          <ion-list *ngFor="let visibleNode of visibleNodes">
+            <ion-item detail="true" (click)="browseChildren(visibleNode)">
+              <ion-label>{{visibleNode.displayName}}</ion-label>
+              <ion-icon *ngIf="visibleNode.class === 1" name="folder" slot="start"></ion-icon>
+              <ion-icon *ngIf="visibleNode.class === 2" name="document-text" slot="start"></ion-icon>
+              <ion-icon *ngIf="visibleNode.class === 4" name="build" slot="start"></ion-icon>
+              <ion-icon *ngIf="visibleNode.class !== 1 && visibleNode.class !== 2 && visibleNode.class !== 4"
+                        name="cube" slot="start"></ion-icon>
               <ion-button>
                 <ion-icon name="copy-outline"></ion-icon>
               </ion-button>
