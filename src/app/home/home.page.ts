@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 interface Server {
   value: string;
   viewValue: string;
 }
+
 interface Namespace {
   value: string;
   viewValue: string;
@@ -30,9 +31,11 @@ export class HomePage {
     {value: 'namespace2', viewValue: '2'},
     {value: 'namespace3', viewValue: '3'}
   ];
-  constructor() {}
 
-  onCategoryChange(category){
+  constructor() {
+  }
+
+  onCategoryChange(category) {
 
   };
 
