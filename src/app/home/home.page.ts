@@ -1,9 +1,6 @@
 import {Component} from '@angular/core';
-
-interface Server {
-  value: string;
-  viewValue: string;
-}
+import {KonektiloOpcUaServer} from "../models/KonektiloOpcUaServer";
+import {KonektiloBrowserService} from "../services/konektilo-browser/konektilo-browser.service";
 
 interface Namespace {
   value: string;
@@ -16,27 +13,36 @@ interface Namespace {
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  opcUaServer: KonektiloOpcUaServer[] = [];
+  selectedOpcUaServer: KonektiloOpcUaServer;
 
   categories = ['fanspeed', '1', '2', 'speed', 'more'];
 
   items = ['matrix', 'My Devices', 'Server', 'Data'];
 
-  servers: Server[] = [
-    {value: 'opcauatestserver', viewValue: 'Testserver'},
-    {value: 'michisserver', viewValue: 'MS Server'},
-    {value: 'romansserver', viewValue: 'Apple Server'}
-  ];
   namespaces: Namespace[] = [
     {value: 'namespace1', viewValue: '1'},
     {value: 'namespace2', viewValue: '2'},
     {value: 'namespace3', viewValue: '3'}
   ];
 
-  constructor() {
+  constructor(public konektiloBrowser: KonektiloBrowserService) {
+    this.konektiloBrowser.readOpcUaServer().subscribe(konektiloResponse => {
+      for(let prop in konektiloResponse.result){
+        this.opcUaServer.push(konektiloResponse.result[prop]);
+      }
+    });
+  }
+
+  opcUaServerSelected() {
+    console.log(this.selectedOpcUaServer);
+  }
+
+  compareOpcUaServer(s1: KonektiloOpcUaServer, s2: KonektiloOpcUaServer): boolean{
+    return s1.name === s2.name;
   }
 
   onCategoryChange(category) {
-
   };
 
 }

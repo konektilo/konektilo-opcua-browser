@@ -21,9 +21,10 @@
           <ion-col>
             <ion-item>
               <ion-label>OPC-UA Server</ion-label>
-              <ion-select interface="popover">
-                <ion-select-option *ngFor="let server of servers"
-                                   [value]="server.value">{{server.viewValue}}</ion-select-option>
+              <ion-select interface="popover" [(ngModel)]="selectedOpcUaServer" [compareWith]="compareOpcUaServer"
+                          (ionChange)="opcUaServerSelected()">
+                <ion-select-option *ngFor="let server of opcUaServer"
+                                   [value]="server">{{server.name}}</ion-select-option>
               </ion-select>
             </ion-item>
           </ion-col>
@@ -54,7 +55,7 @@
             <ion-label>Namespace</ion-label>
             <ion-label></ion-label>
           </ion-list-header>
-          <ion-list *ngFor="let item of items" [value]="item">
+          <ion-list *ngFor="let item of items">
             <ion-item>
               <ion-label>{{item}}</ion-label>
               <ion-icon name="cube" slot="start"></ion-icon>

@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {BrowsePoint} from "../../models/BrowsePoint";
+import {KonektiloOpcUaServer} from "../../models/KonektiloOpcUaServer";
+import {KonektiloResponse} from "../../models/KonektiloResponse";
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +16,8 @@ export class KonektiloBrowserService {
   constructor(public http: HttpClient) {
   }
 
-  readOpcUaServer(): Observable<any> {
-    return this.http.get<any>(this.urlBuilder(BrowsePoint.Server));
+  readOpcUaServer(): Observable<KonektiloResponse<KonektiloOpcUaServer>> {
+    return this.http.get<KonektiloResponse<KonektiloOpcUaServer>>(this.urlBuilder(BrowsePoint.Server));
   }
 
   // readNode(opcUaServer: string, namespace: number, identifier: string): Observable<KonektiloResponse> {
