@@ -21,28 +21,24 @@ export class KonektiloBrowserService {
     return this.http.get<KonektiloResponse<KonektiloOpcUaServer>>(this.urlBuilder(BrowsePoint.Server));
   }
 
-  readNamespaces(opcUaServer: string): Observable<KonektiloResponse<KonektiloNamespace>> {
-    return this.http.get<KonektiloResponse<KonektiloNamespace>>(this.urlBuilder(BrowsePoint.Namespace, opcUaServer));
-  }
-
-  // readNode(opcUaServer: string, namespace: number, identifier: string): Observable<KonektiloResponse> {
-  //   return this.http.get<KonektiloResponse>(this.urlBuilder(opcUaServer, namespace, identifier));
+  // readNamespaces(opcUaServer: string): Observable<KonektiloResponse<KonektiloNamespace>> {
+  //   return this.http.get<KonektiloResponse<KonektiloNamespace>>(this.urlBuilder(BrowsePoint.Namespace, opcUaServer));
   // }
 
-  private urlBuilder(browsePoint: BrowsePoint, opcUaServer?: string): string {
+  readNode(opcUaServerBrowseUrl: string, namespace: number, identifier: string): Observable<KonektiloResponse<any>> {
+    return this.http.get<KonektiloResponse<KonektiloNamespace>>(this.urlBuilder(BrowsePoint.Node, opcUaServerBrowseUrl, namespace, identifier));
+  }
+
+  private urlBuilder(browsePoint: BrowsePoint, opcUaServerBrowseUrl?: string, namespace?: number, identifier?: string): string {
     let url = this.konektiloBaseUrl + ':' + this.konektiloPort + '/api/' + this.apiVersion + '/server';
     switch (browsePoint) {
-      case BrowsePoint.Server:
-        break;
-      case BrowsePoint.Namespace:
-        url += '/' + opcUaServer + '/namespace';
+      // case BrowsePoint.Namespace:
+      //   url += '/' + opcUaServer + '/namespace';
+      //   break;
+      case BrowsePoint.Node:
+        url = opcUaServerBrowseUrl + '/' + namespace.toString() + '/browse/' + identifier;
         break;
     }
     return url;
   }
-
-  // private urlBuilder(opcUaServer: string, namespace: number, identifier: string): string {
-  //   return this.konektiloBaseUrl + ':' + this.konektiloPort + '/api/' + this.apiVersion + '/server/' + opcUaServer +
-  //     '/namespace/' + namespace.toString() + '/identifier/' + identifier;
-  // }
 }

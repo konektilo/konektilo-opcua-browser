@@ -10,10 +10,15 @@ import {KonektiloNamespace} from "../models/KonektiloNamespace";
 })
 export class HomePage {
   opcUaServer: KonektiloOpcUaServer[] = [];
-  namespaces: KonektiloNamespace[] = []
+  opcUaFolders: any[] = [
+    {name: 'Objects', namespace: 0, identifier: '85'},
+    {name: 'Types', namespace: 0, identifier: '86'},
+    {name: 'Views', namespace: 0, identifier: '87'}]
 
   selectedOpcUaServer: KonektiloOpcUaServer;
-  selectedNamespace: KonektiloNamespace;
+  selectedFolder: any;
+
+  selectFolderDisabled = true;
 
   categories = ['fanspeed', '1', '2', 'speed', 'more'];
 
@@ -27,26 +32,22 @@ export class HomePage {
     });
   }
 
-  fetchNamespaces() {
-    this.konektiloBrowser.readNamespaces(this.selectedOpcUaServer.name).subscribe(konektiloResponse => {
-      this.namespaces = [];
-      for (let prop in konektiloResponse.result) {
-        this.namespaces.push(konektiloResponse.result[prop]);
-      }
-    });
+  selectOpcUaServer() {
+    this.selectFolderDisabled = this.selectedOpcUaServer == undefined;
   }
 
-  fetchNodes() {
-    // TODO
-    console.log(this.selectedNamespace);
+  readBaseNodes() {
+    this.konektiloBrowser.readNode(this.selectedOpcUaServer.browseUrl, this.selectedFolder.namespace, this.selectedFolder.identifier).subscribe(test => {
+        console.log(test);
+    });
   }
 
   compareOpcUaServer(s1: KonektiloOpcUaServer, s2: KonektiloOpcUaServer): boolean {
     return s1.name === s2.name;
   }
 
-  compareNamespaces(s1: KonektiloNamespace, s2: KonektiloNamespace): boolean {
-    return s1.number === s2.number;
+  compareNamespaces(s1: any, s2: any): boolean {
+    return s1.name === s2.name;
   }
 
   onCategoryChange(category) {

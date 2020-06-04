@@ -22,7 +22,7 @@
             <ion-item>
               <ion-label>OPC-UA Server</ion-label>
               <ion-select interface="popover" [(ngModel)]="selectedOpcUaServer" [compareWith]="compareOpcUaServer"
-                          (ionChange)="fetchNamespaces()">
+                          (ionChange)="selectOpcUaServer()">
                 <ion-select-option *ngFor="let server of opcUaServer"
                                    [value]="server">{{server.name}}</ion-select-option>
               </ion-select>
@@ -30,11 +30,11 @@
           </ion-col>
           <ion-col>
             <ion-item>
-              <ion-label>Namespace</ion-label>
-              <ion-select interface="popover" [(ngModel)]="selectedNamespace" [compareWith]="compareNamespaces"
-                          (ionChange)="fetchNodes()">
-                <ion-select-option *ngFor="let namespace of namespaces"
-                                   [value]="namespace">{{namespace.number}}</ion-select-option>
+              <ion-label>Folder</ion-label>
+              <ion-select interface="popover" [(ngModel)]="selectedFolder" [compareWith]="compareNamespaces" [disabled]="selectFolderDisabled"
+                          (ionChange)="readBaseNodes()">
+                <ion-select-option *ngFor="let folder of opcUaFolders"
+                                   [value]="folder">{{folder.name}}</ion-select-option>
               </ion-select>
             </ion-item>
           </ion-col>
