@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {KonektiloOpcUaServer} from "../models/KonektiloOpcUaServer";
 import {KonektiloBrowserService} from "../services/konektilo-browser/konektilo-browser.service";
+import {KonektiloService} from "../services/konektilo/konektilo.service";
+import {KonektiloNodeResponse} from "../models/KonektiloNodeResponse";
 
 @Component({
   selector: 'app-home',
@@ -12,6 +14,8 @@ export class HomePage {
   rootNodes: KonektiloBrowseNode[] = [];
   visibleNodes: KonektiloBrowseNode[] = [];
   browsingHistory: KonektiloBrowseNode[] = [];
+  fullNode: KonektiloNodeResponse;
+  fullNodeBrowseData: KonektiloBrowseNode;
 
   selectedOpcUaServer: KonektiloOpcUaServer;
   selectedRootNode: any;
@@ -19,7 +23,7 @@ export class HomePage {
 
   selectRootNodeDisabled = true;
 
-  constructor(public konektiloBrowser: KonektiloBrowserService) {
+  constructor(public konektiloBrowser: KonektiloBrowserService, public konektilo: KonektiloService) {
     this.konektiloBrowser.readOpcUaServer().subscribe(konektiloResponse => {
       for (let prop in konektiloResponse.result) {
         this.opcUaServer.push(konektiloResponse.result[prop]);
@@ -31,6 +35,8 @@ export class HomePage {
     this.selectedRootNode = undefined;
     this.rootNodes = [];
     this.browsingHistory = [];
+    this.fullNode = undefined;
+    this.fullNodeBrowseData = undefined;
     this.visibleNodes = [];
     this.konektiloBrowser.readRootNode(this.selectedOpcUaServer.browseUrl, 0, 84).subscribe(konektiloResponse => {
       for (let prop in konektiloResponse.result) {
@@ -42,6 +48,8 @@ export class HomePage {
 
   selectRootNode(konektiloBrowseNode: KonektiloBrowseNode) {
     this.browsingHistory = [];
+    this.fullNode = undefined;
+    this.fullNodeBrowseData = undefined;
     this.selectedRootNode = konektiloBrowseNode;
     this.fetchChildren(konektiloBrowseNode);
   }
@@ -57,10 +65,17 @@ export class HomePage {
   fetchChildren(konektiloBrowseNode: KonektiloBrowseNode) {
     this.konektiloBrowser.readNode(konektiloBrowseNode.browseUrl).subscribe(konektiloResponse => {
       this.visibleNodes = [];
+      this.fullNode = undefined;
+      this.fullNodeBrowseData = undefined;
       for (let prop in konektiloResponse.result) {
         this.visibleNodes.push(konektiloResponse.result[prop]);
       }
     });
+  }
+
+  getDataFromNode(browseNode: KonektiloBrowseNode) {
+    this.fullNodeBrowseData = browseNode;
+    this.konektilo.readNode(browseNode.accessUrl).subscribe(konektiloResponse => this.fullNode = konektiloResponse);
   }
 
   compareOpcUaServer(s1: KonektiloOpcUaServer, s2: KonektiloOpcUaServer): boolean {

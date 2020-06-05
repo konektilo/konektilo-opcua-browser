@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { KonektiloBrowserService } from './konektilo-browser.service';
+import {KonektiloBrowserService} from './konektilo-browser.service';
 
 describe('KonektiloBrowserService', () => {
   let service: KonektiloBrowserService;
