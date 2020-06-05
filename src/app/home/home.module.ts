@@ -7,6 +7,7 @@ import {HomePage} from './home.page';
 import {HomePageRoutingModule} from './home-routing.module';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatSelectModule} from '@angular/material/select';
+import {ClipboardModule} from "@angular/cdk/clipboard";
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import {MatSelectModule} from '@angular/material/select';
     HomePageRoutingModule,
     ReactiveFormsModule,
     MatDividerModule,
-    MatSelectModule
+    MatSelectModule,
+    ClipboardModule
   ],
   declarations: [HomePage]
 })

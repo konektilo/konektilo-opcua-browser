@@ -73,7 +73,7 @@
               <ion-icon *ngIf="visibleNode.class === 4" name="build" slot="start"></ion-icon>
               <ion-icon *ngIf="visibleNode.class !== 1 && visibleNode.class !== 2 && visibleNode.class !== 4"
                         name="cube" slot="start"></ion-icon>
-              <ion-button *ngIf="visibleNode.class === 2 || visibleNode.class === 4">
+              <ion-button *ngIf="visibleNode.class === 2 || visibleNode.class === 4" [cdkCopyToClipboard]="visibleNode.accessUrl" (click)="$event.stopPropagation();">
                 <ion-icon name="copy-outline"></ion-icon>
               </ion-button>
             </ion-item>
