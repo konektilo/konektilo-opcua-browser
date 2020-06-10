@@ -3,6 +3,7 @@ import {KonektiloOpcUaServer} from "../models/KonektiloOpcUaServer";
 import {KonektiloBrowserService} from "../services/konektilo-browser/konektilo-browser.service";
 import {KonektiloService} from "../services/konektilo/konektilo.service";
 import {KonektiloNodeResponse} from "../models/KonektiloNodeResponse";
+import {Storage} from '@ionic/storage';
 
 @Component({
   selector: 'app-home',
@@ -20,11 +21,31 @@ export class HomePage {
   selectedOpcUaServer: KonektiloOpcUaServer;
   selectedRootNode: any;
   selectedNavbarNode: KonektiloBrowseNode;
+  konektiloUrlInput: string;
 
   selectRootNodeDisabled = true;
 
-  constructor(public konektiloBrowser: KonektiloBrowserService, public konektilo: KonektiloService) {
-    this.konektiloBrowser.readOpcUaServer().subscribe(konektiloResponse => {
+  constructor(public konektiloBrowser: KonektiloBrowserService, public konektilo: KonektiloService,
+              public storage: Storage) {
+    storage.ready().then(() => {
+      this.storage.get('konektiloUrl').then((konektiloUrl) => {
+        if (konektiloUrl === null) {
+          this.konektiloUrlInput = 'http://localhost:80';
+        } else {
+          this.konektiloUrlInput = konektiloUrl;
+        }
+        this.connectToKonektilo();
+      });
+    });
+  }
+
+  saveAndConnectToKonektilo() {
+    this.storage.set('konektiloUrl', this.konektiloUrlInput).then(() => this.connectToKonektilo());
+  }
+
+  connectToKonektilo() {
+    this.opcUaServer = [];
+    this.konektiloBrowser.readOpcUaServer(this.konektiloUrlInput).subscribe(konektiloResponse => {
       for (let prop in konektiloResponse.result) {
         this.opcUaServer.push(konektiloResponse.result[prop]);
       }

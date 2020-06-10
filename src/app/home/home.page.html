@@ -20,6 +20,15 @@
         <ion-segment scrollable>
           <ion-col>
             <ion-item>
+              <ion-label>Konektilo url</ion-label>
+              <ion-input [(ngModel)]="konektiloUrlInput" type="url" autocorrect="off"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-button (click)="saveAndConnectToKonektilo()">Save & connect</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-item>
               <ion-label>OPC-UA Server</ion-label>
               <ion-select interface="popover" [(ngModel)]="selectedOpcUaServer" [compareWith]="compareOpcUaServer"
                           (ionChange)="selectOpcUaServer()">
