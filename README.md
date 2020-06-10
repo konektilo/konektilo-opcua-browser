@@ -1,4 +1,4 @@
-![](src/assets/konektilo-logo.png | width=300)
+![](graphics/konektilo-logo-readme.png)
 # THIS IS A BETA VERSION!
 # konektilo opc-ua browser
 The konektilo opc-ua browser is an ionic app which you can use with konektilo to explore the structure of you connected opc-ua servers.
