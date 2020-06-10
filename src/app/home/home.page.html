@@ -1,19 +1,11 @@
-<ion-content [fullscreen]="true">
-  <ion-card>
-    <ion-card-header>
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <ion-card-title class="konektiloTitle">OPC-UA Browser</ion-card-title>
-          </ion-col>
-          <ion-col>
-            <ion-img class="logoStyle" src="./assets/konektilo-logo.png"></ion-img>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="konektiloTitle">OPC-UA Browser</ion-title>
+    <ion-img slot="end" class="logoStyle" src="./assets/konektilo-logo.png"></ion-img>
+  </ion-toolbar>
+</ion-header>
 
-    </ion-card-header>
-  </ion-card>
+<ion-content [fullscreen]="true">
   <ion-card>
     <ion-grid>
       <ion-row>
@@ -132,3 +124,9 @@
     </ion-grid>
   </ion-card>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-item slot="end">Version 1.0.0</ion-item>
+  </ion-toolbar>
+</ion-footer>
