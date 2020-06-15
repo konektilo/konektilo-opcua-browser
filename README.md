@@ -8,4 +8,28 @@ If you would like to test and include konektilo as RESTful api for opc-ua you ca
 ![alt text](graphics/konektilo-opcua-browser.png "konektilo opcua browser overview")
 
 # getting started
-* tbd
+* Download konektilo docker image
+    * If you would like to test and include konektilo as RESTful api for opc-ua you can find the free version here: ```https://konektilo.de/testuser```
+* Use this docker-compose file for starting konektilo and konektilo-opcua-browser
+```
+version: '3.7'
+
+services:
+  konektilo:
+    image: konektilodockerhub/konektilo_test_user:latest
+    container_name: konektilo
+    ports:
+      - "8080:80"
+    volumes:
+      - C:/PATH/TO/MY/CONFIGURATION/FOLDER/appsettings.json:/app/appsettings.json
+    restart: always
+
+  konektilo-opcua-browser:
+    image: konektilodockerhub/konektilo-opcua-browser:latest
+    container_name: konektilo-opcua-browser
+    ports:
+      - "8090:80"
+    restart: always
+    depends_on:
+      - konektilo
+```
