@@ -88,6 +88,8 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
     --ion-color-light-contrast-rgb: 0, 0, 0;
     --ion-color-light-shade: #d7d8da;
     --ion-color-light-tint: #f5f6f9;
+    /** Change default font **/
+    --ion-font-family: 'Rubik Regular';
 }
 
 @media (prefers-color-scheme: dark) {
@@ -224,5 +226,14 @@ body {
 
 body {
     margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+@font-face {
+    font-family: "Rubik Bold";
+    src: url("../assets/rubikbold.ttf");
+}
+
+@font-face {
+    font-family: "Rubik Regular";
+    src: url("../assets/rubikregular.ttf");
 }
