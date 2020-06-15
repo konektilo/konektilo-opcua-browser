@@ -12,7 +12,7 @@
         <ion-segment scrollable>
           <ion-col>
             <ion-item>
-              <ion-label class="urlInputLabel">konektilo URL</ion-label>
+              <ion-label class="customLabel">konektilo URL</ion-label>
               <ion-input [(ngModel)]="konektiloUrlInput" type="url" autocorrect="off" class="urlInput"></ion-input>
             </ion-item>
           </ion-col>
@@ -21,9 +21,9 @@
           </ion-col>
           <ion-col>
             <ion-item>
-              <ion-label>OPC-UA Server</ion-label>
+              <ion-label class="customLabel">OPC-UA Server</ion-label>
               <ion-select interface="popover" [(ngModel)]="selectedOpcUaServer" [compareWith]="compareOpcUaServer"
-                          (ionChange)="selectOpcUaServer()">
+                          (ionChange)="selectOpcUaServer()" class="customSelect">
                 <ion-select-option *ngFor="let server of opcUaServer"
                                    [value]="server">{{server.name}}</ion-select-option>
               </ion-select>
@@ -31,10 +31,10 @@
           </ion-col>
           <ion-col>
             <ion-item>
-              <ion-label>Folder</ion-label>
+              <ion-label class="customLabel">Folder</ion-label>
               <ion-select interface="popover" [(ngModel)]="selectedRootNode" [compareWith]="compareBrowseNodes"
                           [disabled]="selectRootNodeDisabled"
-                          (ionChange)="selectRootNode($event.detail.value)">
+                          (ionChange)="selectRootNode($event.detail.value)" class="customSelect">
                 <ion-select-option *ngFor="let folder of rootNodes"
                                    [value]="folder">{{folder.displayName}}</ion-select-option>
               </ion-select>
@@ -127,6 +127,7 @@
 
 <ion-footer>
   <ion-toolbar>
+    <ion-item><a href="www.konektilo.de">www.konektilo.de</a></ion-item>
     <ion-item slot="end">Version 1.0.0</ion-item>
   </ion-toolbar>
 </ion-footer>

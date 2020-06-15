@@ -35,12 +35,15 @@
 }
 
 .urlInput {
-  color: #040f3d;
   min-width: 250px;
 }
 
-.urlInputLabel {
+.customLabel {
   color: #19B814;
   font-family: "Rubik Bold", sans-serif;
   font-weight: bold;
+}
+
+.customSelect {
+  min-width: 200px;
 }
