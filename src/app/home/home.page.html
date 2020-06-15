@@ -74,7 +74,7 @@
               <ion-icon *ngIf="visibleNode.class === 4" name="build" slot="start"></ion-icon>
               <ion-icon *ngIf="visibleNode.class !== 1 && visibleNode.class !== 2 && visibleNode.class !== 4"
                         name="cube" slot="start"></ion-icon>
-              <ion-button *ngIf="visibleNode.class === 2 || visibleNode.class === 4"
+              <ion-button *ngIf="visibleNode.class === 2"
                           (click)="getDataFromNode(visibleNode);$event.stopPropagation();">
                 <ion-icon name="download-outline"></ion-icon>
               </ion-button>
