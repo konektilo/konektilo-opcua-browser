@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
-import {KonektiloOpcUaServer} from "../models/KonektiloOpcUaServer";
-import {KonektiloBrowserService} from "../services/konektilo-browser/konektilo-browser.service";
-import {KonektiloService} from "../services/konektilo/konektilo.service";
-import {KonektiloNodeResponse} from "../models/KonektiloNodeResponse";
+import {KonektiloOpcUaServer} from '../models/KonektiloOpcUaServer';
+import {KonektiloBrowserService} from '../services/konektilo-browser/konektilo-browser.service';
+import {KonektiloService} from '../services/konektilo/konektilo.service';
+import {KonektiloNodeResponse} from '../models/KonektiloNodeResponse';
 import {Storage} from '@ionic/storage';
 
 @Component({
@@ -46,9 +46,7 @@ export class HomePage {
   connectToKonektilo() {
     this.opcUaServer = [];
     this.konektiloBrowser.readOpcUaServer(this.konektiloUrlInput).subscribe(konektiloResponse => {
-      for (let prop in konektiloResponse.result) {
-        this.opcUaServer.push(konektiloResponse.result[prop]);
-      }
+      Object.keys(konektiloResponse.result).forEach(opcuaServer => this.opcUaServer.push(konektiloResponse.result[opcuaServer]));
     });
   }
 
@@ -59,12 +57,10 @@ export class HomePage {
     this.fullNode = undefined;
     this.fullNodeBrowseData = undefined;
     this.visibleNodes = [];
-    this.konektiloBrowser.readRootNode(this.selectedOpcUaServer.browseUrl, 0, 84).subscribe(konektiloResponse => {
-      for (let prop in konektiloResponse.result) {
-        this.rootNodes.push(konektiloResponse.result[prop]);
-      }
+    this.konektiloBrowser.readNode(this.selectedOpcUaServer.browseUrl).subscribe(konektiloResponse => {
+      Object.keys(konektiloResponse.result).forEach(nodeId => this.rootNodes.push(konektiloResponse.result[nodeId]));
     });
-    this.selectRootNodeDisabled = this.selectedOpcUaServer == undefined;
+    this.selectRootNodeDisabled = this.selectedOpcUaServer === undefined;
   }
 
   selectRootNode(konektiloBrowseNode: KonektiloBrowseNode) {
@@ -88,9 +84,7 @@ export class HomePage {
       this.visibleNodes = [];
       this.fullNode = undefined;
       this.fullNodeBrowseData = undefined;
-      for (let prop in konektiloResponse.result) {
-        this.visibleNodes.push(konektiloResponse.result[prop]);
-      }
+      Object.keys(konektiloResponse.result).forEach(nodeId => this.visibleNodes.push(konektiloResponse.result[nodeId]));
     });
   }
 
@@ -112,6 +106,6 @@ export class HomePage {
     const toCutOff = this.browsingHistory.length - (nodePosition + 1);
     this.browsingHistory.splice(nodePosition + 1, toCutOff);
     this.browseChildren(konektiloBrowseNode);
-  };
+  }
 
 }
