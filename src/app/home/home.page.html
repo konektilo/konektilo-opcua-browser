@@ -9,125 +9,64 @@
   <ion-card>
     <ion-grid>
       <ion-row>
-        <ion-segment scrollable>
-          <ion-col>
-            <ion-item>
-              <ion-label class="customLabel">konektilo URL</ion-label>
-              <ion-input [(ngModel)]="konektiloUrlInput" type="url" autocorrect="off" class="urlInput"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col>
-            <ion-button (click)="saveAndConnectToKonektilo()">Save & connect</ion-button>
-          </ion-col>
-          <ion-col>
-            <ion-item>
-              <ion-label class="customLabel">OPC-UA Server</ion-label>
-              <ion-select interface="popover" [(ngModel)]="selectedOpcUaServer" [compareWith]="compareOpcUaServer"
-                          (ionChange)="selectOpcUaServer()" class="customSelect">
-                <ion-select-option *ngFor="let server of opcUaServer"
-                                   [value]="server">{{server.name}}</ion-select-option>
-              </ion-select>
-            </ion-item>
-          </ion-col>
-          <ion-col>
-            <ion-item>
-              <ion-label class="customLabel">Folder</ion-label>
-              <ion-select interface="popover" [(ngModel)]="selectedRootNode" [compareWith]="compareBrowseNodes"
-                          [disabled]="selectRootNodeDisabled"
-                          (ionChange)="selectRootNode($event.detail.value)" class="customSelect">
-                <ion-select-option *ngFor="let folder of rootNodes"
-                                   [value]="folder">{{folder.displayName}}</ion-select-option>
-              </ion-select>
-            </ion-item>
-          </ion-col>
-        </ion-segment>
+        <ion-col>
+          <ion-item>
+            <ion-label class="customLabel">konektilo URL</ion-label>
+            <ion-input [(ngModel)]="konektiloUrlInput" type="url" autocorrect="off" class="urlInput"></ion-input>
+          </ion-item>
+        </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-segment scrollable>
-          <ion-col>
-            <ion-segment (ionChange)="onNodeChange($event.detail.value)" [(ngModel)]="selectedNavbarNode">
-              <ion-segment-button [value]="selectedRootNode" (click)="selectRootNode(selectedRootNode)">
-                <ion-icon name="home"></ion-icon>
-              </ion-segment-button>
-              <ion-segment-button *ngFor="let konektiloBrowseNode of browsingHistory" [value]="konektiloBrowseNode"
-                                  layout="icon-start">
-                <ion-icon name="caret-forward"></ion-icon>
-                <ion-label>{{konektiloBrowseNode.displayName}}</ion-label>
-              </ion-segment-button>
-            </ion-segment>
-          </ion-col>
-        </ion-segment>
-      </ion-row>
-    </ion-grid>
-    <mat-divider></mat-divider>
-    <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-list-header>
-            <ion-label>{{selectedRootNode?.name}}</ion-label>
-          </ion-list-header>
-          <ion-list *ngFor="let visibleNode of visibleNodes">
-            <ion-item detail="true" (click)="browseChildren(visibleNode)">
-              <ion-label>{{visibleNode.displayName}}</ion-label>
-              <ion-icon *ngIf="visibleNode.class === 1" name="folder" slot="start"></ion-icon>
-              <ion-icon *ngIf="visibleNode.class === 2" name="document-text" slot="start"></ion-icon>
-              <ion-icon *ngIf="visibleNode.class === 4" name="build" slot="start"></ion-icon>
-              <ion-icon *ngIf="visibleNode.class !== 1 && visibleNode.class !== 2 && visibleNode.class !== 4"
-                        name="cube" slot="start"></ion-icon>
-              <ion-button *ngIf="visibleNode.class === 2"
-                          (click)="getDataFromNode(visibleNode);$event.stopPropagation();">
-                <ion-icon name="download-outline"></ion-icon>
-              </ion-button>
-              <ion-button *ngIf="visibleNode.class === 2 || visibleNode.class === 4"
-                          [cdkCopyToClipboard]="visibleNode.accessUrl" (click)="$event.stopPropagation();">
-                <ion-icon name="copy-outline"></ion-icon>
-              </ion-button>
-            </ion-item>
-          </ion-list>
+          <ion-item>
+            <ion-label class="customLabel">optional:</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label class="customLabel">user</ion-label>
+            <ion-input [(ngModel)]="konektiloUrlInput" type="url" autocorrect="off" class="urlInput"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label class="customLabel">password</ion-label>
+            <ion-input [(ngModel)]="konektiloUrlInput" type="url" autocorrect="off" class="urlInput"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button (click)="saveAndConnectToKonektilo()">Save & connect</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label class="customLabel">OPC-UA Server</ion-label>
+            <ion-select interface="popover" [(ngModel)]="selectedOpcUaServer" [compareWith]="compareOpcUaServer"
+                        (ionChange)="selectOpcUaServer()" class="customSelect">
+              <ion-select-option *ngFor="let server of opcUaServer"
+                                 [value]="server">{{server.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
         </ion-col>
         <ion-col>
-          <ion-list-header>
-            <ion-label>Node data</ion-label>
-          </ion-list-header>
-          <ion-list>
-            <ion-item>
-              <ion-label>Display name</ion-label>
-              <ion-label color="primary">{{fullNode?.result.variableDisplayname}}</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>Node id</ion-label>
-              <ion-label color="primary">{{fullNodeBrowseData?.nodeId}}</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>Data</ion-label>
-              <ion-label color="primary">{{fullNode?.result.variableData}}</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>Data type</ion-label>
-              <ion-label color="primary">{{fullNode?.result.variableType}}</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>Status code</ion-label>
-              <ion-label color="primary">{{fullNode?.result.variableStatusCode}}</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>Request successful</ion-label>
-              <ion-label color="primary">{{fullNode?.success}}</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>Request description</ion-label>
-              <ion-label color="primary">{{fullNode?.description}}</ion-label>
-            </ion-item>
-          </ion-list>
+          <ion-item>
+            <ion-label class="customLabel">Folder</ion-label>
+            <ion-select interface="popover" [(ngModel)]="selectedRootNode" [compareWith]="compareBrowseNodes"
+                        [disabled]="selectRootNodeDisabled"
+                        (ionChange)="selectRootNode($event.detail.value)" class="customSelect">
+              <ion-select-option *ngFor="let folder of rootNodes"
+                                 [value]="folder">{{folder.displayName}}</ion-select-option>
+            </ion-select>
+          </ion-item>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-card>
 </ion-content>
-
-<ion-footer>
-  <ion-toolbar>
-    <ion-item><a href="https://konektilo.de">www.konektilo.de</a></ion-item>
-    <ion-item slot="end">Version 1.0.0</ion-item>
-  </ion-toolbar>
-</ion-footer>

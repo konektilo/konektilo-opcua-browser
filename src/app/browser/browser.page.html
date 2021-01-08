@@ -4,7 +4,12 @@
   <div class="container">
     <div class="left-width">
       <ion-item>
-        <ion-label>Selected OPC-UA server: opcuatestserver</ion-label>
+        <ion-label class="customLabel">OPC-UA Server</ion-label>
+        <ion-select interface="popover" [(ngModel)]="selectedOpcUaServer" [compareWith]="compareOpcUaServer"
+                    (ionChange)="selectOpcUaServer()" class="customSelect">
+          <ion-select-option *ngFor="let server of opcUaServer"
+                             [value]="server">{{server.name}}</ion-select-option>
+        </ion-select>
       </ion-item>
 
       <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
@@ -39,5 +44,3 @@
     </div>
   </div>
 </ion-content>
-
-<app-konektilo-footer></app-konektilo-footer>
