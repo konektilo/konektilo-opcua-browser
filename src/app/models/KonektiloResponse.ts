@@ -3,6 +3,6 @@ export interface KonektiloResponse<T> {
   description: string;
   messages: string[];
   result: {
-    string: T;
-  }
+    [x: string]: T;
+  };
 }
