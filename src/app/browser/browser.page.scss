@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+}
+
+.right-width {
+  flex: 0 1 50%;
+  align-content: flex-start;
+}
+
+.left-width {
+  flex: 1 0 50%;
+}

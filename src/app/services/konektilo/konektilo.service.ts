@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {KonektiloNodeResponse} from "../../models/KonektiloNodeResponse";
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {KonektiloNodeResponse} from '../../models/KonektiloNodeResponse';
 
 @Injectable({
   providedIn: 'root'

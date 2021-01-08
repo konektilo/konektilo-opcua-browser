@@ -4,31 +4,21 @@ import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import {KonektiloBrowserService} from '../services/konektilo-browser/konektilo-browser.service';
 import {TreeDataService} from '../services/tree-data/tree-data.service';
 
-interface FoodNode {
-  name: string;
-  children?: FoodNode[];
-}
-
-/** Flat node with expandable and level information */
-interface ExampleFlatNode {
-  expandable: boolean;
-  name: string;
-  level: number;
-}
-
 @Component({
   selector: 'app-browser',
   templateUrl: './browser.page.html',
   styleUrls: ['./browser.page.scss'],
 })
 export class BrowserPage implements OnInit {
+  selectedBrowseNode: KonektiloBrowseNodeInternal;
+
   // tslint:disable-next-line:variable-name
   private _transformer = (node: KonektiloBrowseNodeInternal, level: number) => {
     node.level = level;
     return node;
   }
 
-  treeControl = new FlatTreeControl<ExampleFlatNode>(
+  treeControl = new FlatTreeControl<KonektiloBrowseNodeInternal>(
     node => node.level, node => node.expandable);
 
   treeFlattener = new MatTreeFlattener(
@@ -49,16 +39,13 @@ export class BrowserPage implements OnInit {
   ngOnInit() {
   }
 
-  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+  hasChild = (_: number, node: KonektiloBrowseNodeInternal) => node.expandable;
 
   onExpandNode(browseNode: KonektiloBrowseNodeInternal) {
-    this.treeDataService.nodeExpanded(browseNode).then(res => {
-      this.dataSource.data = res;
-      console.log(res);
-    });
+    this.treeDataService.nodeExpanded(browseNode).then(res => this.dataSource.data = res);
   }
 
   readNode(browseNode: KonektiloBrowseNodeInternal) {
-
+    this.selectedBrowseNode = browseNode;
   }
 }
