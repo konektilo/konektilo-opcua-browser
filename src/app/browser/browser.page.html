@@ -10,11 +10,12 @@
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
       <!-- use a disabled button to provide padding for tree leaf -->
       <button mat-icon-button disabled></button>
-      {{node.name}}
+<!--      {{node.name}}-->
+      <ion-button (click)="readNode(node)">{{node.name}}</ion-button>
     </mat-tree-node>
     <!-- This is the tree node template for expandable nodes -->
     <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
-      <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name" (click)="onExpand(node)">
+      <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name" (click)="onExpandNode(node)">
         <mat-icon class="mat-icon-rtl-mirror">
           {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
         </mat-icon>
