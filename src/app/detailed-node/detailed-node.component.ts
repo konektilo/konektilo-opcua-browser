@@ -12,6 +12,7 @@ export class DetailedNodeComponent implements OnInit, OnChanges {
   @Input() browseNode: KonektiloBrowseNodeInternal;
   fullNode: KonektiloNodeResponse;
   buttonsDisabled = true;
+  dataToDisplay = '';
 
   constructor(public konektiloService: KonektiloService, public toastController: ToastController) {
     this.updateData();
@@ -33,6 +34,11 @@ export class DetailedNodeComponent implements OnInit, OnChanges {
       this.konektiloService.readNode(this.browseNode.accessUrl).subscribe(fullNode => {
         this.fullNode = fullNode;
         this.buttonsDisabled = fullNode === undefined; // Disabled buttons if no node selected
+        if (fullNode.result.variableData instanceof Object) {
+          this.dataToDisplay = JSON.stringify(fullNode.result.variableData);
+        } else {
+          this.dataToDisplay = fullNode.result.variableData;
+        }
       });
     }
   }
@@ -44,5 +50,4 @@ export class DetailedNodeComponent implements OnInit, OnChanges {
     });
     await toast.present();
   }
-
 }
