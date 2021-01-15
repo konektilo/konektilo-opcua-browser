@@ -22,6 +22,8 @@ export class HomePage {
   selectedRootNode: any;
   selectedNavbarNode: KonektiloBrowseNode;
   konektiloUrlInput: string;
+  konektiloUserInput: string;
+  konektiloPasswordInput: string;
 
   selectRootNodeDisabled = true;
 

@@ -1,44 +1,42 @@
-<div class="componentBorder">
-  <ion-item lines="none">
-    <ion-label color="primary">Node data</ion-label>
-    <ion-button [cdkCopyToClipboard]="browseNode?.accessUrl" (click)="showCopyToast()"
-                tooltip="Copy konektilo URL for node"
-                positionV="bottom"
-                [disabled]="buttonsDisabled">
-      <ion-icon name="copy"></ion-icon>
-    </ion-button>
-    <ion-button (click)="updateData()" tooltip="Refresh node data" positionV="bottom" [disabled]="buttonsDisabled">
-      <ion-icon name="refresh-circle"></ion-icon>
-    </ion-button>
+<ion-item lines="none">
+  <ion-label color="primary">Node data</ion-label>
+  <ion-button [cdkCopyToClipboard]="browseNode?.accessUrl" (click)="showCopyToast()"
+              tooltip="Copy konektilo URL for node"
+              positionV="bottom"
+              [disabled]="buttonsDisabled">
+    <ion-icon name="copy"></ion-icon>
+  </ion-button>
+  <ion-button (click)="updateData()" tooltip="Refresh node data" positionV="bottom" [disabled]="buttonsDisabled">
+    <ion-icon name="refresh-circle"></ion-icon>
+  </ion-button>
+</ion-item>
+<ion-list>
+  <ion-item>
+    <ion-label>Display name</ion-label>
+    <ion-label color="primary">{{fullNode?.result.variableDisplayname}}</ion-label>
   </ion-item>
-  <ion-list>
-    <ion-item>
-      <ion-label>Display name</ion-label>
-      <ion-label color="primary">{{fullNode?.result.variableDisplayname}}</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Node id</ion-label>
-      <ion-label color="primary">{{browseNode?.nodeId}}</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Data</ion-label>
-      <ion-label color="primary">{{fullNode?.result.variableData}}</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Data type</ion-label>
-      <ion-label color="primary">{{fullNode?.result.variableType}}</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Status code</ion-label>
-      <ion-label color="primary">{{fullNode?.result.variableStatusCode}}</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Request successful</ion-label>
-      <ion-label color="primary">{{fullNode?.success}}</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Request description</ion-label>
-      <ion-label color="primary">{{fullNode?.description}}</ion-label>
-    </ion-item>
-  </ion-list>
-</div>
+  <ion-item>
+    <ion-label>Node id</ion-label>
+    <ion-label color="primary">{{browseNode?.nodeId}}</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>Data</ion-label>
+    <ion-label color="primary">{{fullNode?.result.variableData}}</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>Data type</ion-label>
+    <ion-label color="primary">{{fullNode?.result.variableType}}</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>Status code</ion-label>
+    <ion-label color="primary">{{fullNode?.result.variableStatusCode}}</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>Request successful</ion-label>
+    <ion-label color="primary">{{fullNode?.success}}</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>Request description</ion-label>
+    <ion-label color="primary">{{fullNode?.description}}</ion-label>
+  </ion-item>
+</ion-list>

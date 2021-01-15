@@ -5,68 +5,75 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-card>
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label class="customLabel">konektilo URL</ion-label>
-            <ion-input [(ngModel)]="konektiloUrlInput" type="url" autocorrect="off" class="urlInput"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label class="customLabel">optional:</ion-label>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label class="customLabel">user</ion-label>
-            <ion-input [(ngModel)]="konektiloUrlInput" type="url" autocorrect="off" class="urlInput"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label class="customLabel">password</ion-label>
-            <ion-input [(ngModel)]="konektiloUrlInput" type="url" autocorrect="off" class="urlInput"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-button (click)="saveAndConnectToKonektilo()">Save & connect</ion-button>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label class="customLabel">OPC-UA Server</ion-label>
-            <ion-select interface="popover" [(ngModel)]="selectedOpcUaServer" [compareWith]="compareOpcUaServer"
-                        (ionChange)="selectOpcUaServer()" class="customSelect">
-              <ion-select-option *ngFor="let server of opcUaServer"
-                                 [value]="server">{{server.name}}</ion-select-option>
-            </ion-select>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item>
-            <ion-label class="customLabel">Folder</ion-label>
-            <ion-select interface="popover" [(ngModel)]="selectedRootNode" [compareWith]="compareBrowseNodes"
-                        [disabled]="selectRootNodeDisabled"
-                        (ionChange)="selectRootNode($event.detail.value)" class="customSelect">
-              <ion-select-option *ngFor="let folder of rootNodes"
-                                 [value]="folder">{{folder.displayName}}</ion-select-option>
-            </ion-select>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-card>
+<ion-content>
+  <div class="container">
+    <div class="left-width">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label class="customLabel">Configure connection to konektilo</ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label>konektilo URL:</ion-label>
+              <ion-input [(ngModel)]="konektiloUrlInput" type="url" autocorrect="off" class="urlInput"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label class="customLabel">optional</ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label>user</ion-label>
+              <ion-input [(ngModel)]="konektiloUserInput" type="url" autocorrect="off" class="urlInput"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label>password</ion-label>
+              <ion-input [(ngModel)]="konektiloPasswordInput" type="url" autocorrect="off" class="urlInput"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-button (click)="saveAndConnectToKonektilo()">Save & connect</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div class="right-width">
+      <p>
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+        dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+        clita
+        kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+        sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+        voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+        sanctus est Lorem ipsum dolor sit amet.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+        dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+        clita
+        kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+        sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+        voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+        sanctus est Lorem ipsum dolor sit amet.
+      </p>
+    </div>
+  </div>
 </ion-content>
