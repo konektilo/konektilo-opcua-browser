@@ -4,9 +4,9 @@
   <div class="container">
     <div class="left-width">
       <ion-item>
-        <ion-label class="customLabel">OPC-UA Server</ion-label>
-        <ion-select interface="popover" [(ngModel)]="selectedOpcUaServer" [compareWith]="compareOpcUaServer"
-                    (ionChange)="selectOpcUaServer()" class="customSelect">
+        <ion-label class="customLabel">Selected OPC-UA server</ion-label>
+        <ion-select interface="action-sheet" [(ngModel)]="selectedOpcUaServer" [compareWith]="compareOpcUaServer"
+                    (ionChange)="selectOpcUaServer()" [value]="opcUaServer[0]">
           <ion-select-option *ngFor="let server of opcUaServer"
                              [value]="server">{{server.name}}</ion-select-option>
         </ion-select>

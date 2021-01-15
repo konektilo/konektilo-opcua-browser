@@ -50,4 +50,12 @@ export class DetailedNodeComponent implements OnInit, OnChanges {
     });
     await toast.present();
   }
+
+  onAddRemoveFavorites() {
+    // TODO add/remove favorites
+  }
+
+  onAddRemoveSubscriptions() {
+    // TODO add/remove to subscriptions
+  }
 }
