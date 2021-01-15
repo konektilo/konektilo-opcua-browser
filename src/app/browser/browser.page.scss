@@ -1,5 +1,6 @@
 .container {
   display: flex;
+  height: 90%;
 }
 
 .right-width {
@@ -9,4 +10,8 @@
 
 .left-width {
   flex: 1 0 50%;
+}
+
+.treeHeight {
+  height: 100%;
 }
