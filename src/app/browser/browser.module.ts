@@ -13,6 +13,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {KonektiloHeaderComponent} from '../konektilo-header/konektilo-header.component';
 import {KonektiloFooterComponent} from '../konektilo-footer/konektilo-footer.component';
 import {DetailedNodeComponent} from '../detailed-node/detailed-node.component';
+import {TooltipsModule} from 'ionic4-tooltips';
+import {ClipboardModule} from '@angular/cdk/clipboard';
 
 @NgModule({
   imports: [
@@ -22,7 +24,10 @@ import {DetailedNodeComponent} from '../detailed-node/detailed-node.component';
     BrowserPageRoutingModule,
     MatTreeModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    TooltipsModule,
+    ClipboardModule,
+    // Ionic button tooltips
   ],
   declarations: [BrowserPage, KonektiloHeaderComponent, KonektiloFooterComponent, DetailedNodeComponent]
 })

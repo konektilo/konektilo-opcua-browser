@@ -1,6 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {KonektiloService} from '../services/konektilo/konektilo.service';
 import {KonektiloNodeResponse} from '../models/KonektiloNodeResponse';
+import {ToastController} from '@ionic/angular';
 
 @Component({
   selector: 'app-detailed-node',
@@ -10,8 +11,9 @@ import {KonektiloNodeResponse} from '../models/KonektiloNodeResponse';
 export class DetailedNodeComponent implements OnInit, OnChanges {
   @Input() browseNode: KonektiloBrowseNodeInternal;
   fullNode: KonektiloNodeResponse;
+  buttonsDisabled = true;
 
-  constructor(public konektiloService: KonektiloService) {
+  constructor(public konektiloService: KonektiloService, public toastController: ToastController) {
     this.updateData();
   }
 
@@ -28,8 +30,19 @@ export class DetailedNodeComponent implements OnInit, OnChanges {
 
   updateData() {
     if (this.browseNode !== undefined) {
-      this.konektiloService.readNode(this.browseNode.accessUrl).subscribe(fullNode => this.fullNode = fullNode);
+      this.konektiloService.readNode(this.browseNode.accessUrl).subscribe(fullNode => {
+        this.fullNode = fullNode;
+        this.buttonsDisabled = fullNode === undefined; // Disabled buttons if no node selected
+      });
     }
+  }
+
+  async showCopyToast() {
+    const toast = await this.toastController.create({
+      message: 'Konektlo URL of node copied to clipboard.',
+      duration: 2000
+    });
+    await toast.present();
   }
 
 }
