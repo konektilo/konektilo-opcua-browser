@@ -23,7 +23,7 @@
   </ion-item>
   <ion-item>
     <ion-label>Node id</ion-label>
-    <ion-label color="primary" class="ion-text-wrap">{{browseNode?.nodeId}}</ion-label>
+    <ion-label color="primary" class="ion-text-wrap">{{fullNode?.result.nodeId}}</ion-label>
   </ion-item>
   <ion-item>
     <ion-label>Data</ion-label>
@@ -36,6 +36,14 @@
   <ion-item>
     <ion-label>Status code</ion-label>
     <ion-label color="primary">{{fullNode?.result.variableStatusCode}}</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>Server timestamp</ion-label>
+    <ion-label color="primary">{{fullNode?.result.serverTimeStamp | date: 'HH:mm:ss.SSS, MM.dd.y'}}</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>Source timestamp</ion-label>
+    <ion-label color="primary">{{fullNode?.result.sourceTimeStamp | date: 'HH:mm:ss.SSS, MM.dd.y'}}</ion-label>
   </ion-item>
   <ion-item>
     <ion-label>Request successful</ion-label>

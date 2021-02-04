@@ -3,6 +3,10 @@ export interface KonektiloNodeResponse {
   description: string;
   messages: string[];
   result: {
+    nodeId: string;
+    opcUaServer: string;
+    serverTimeStamp: string;
+    sourceTimeStamp: string;
     variableDisplayname: string;
     variableData: any;
     variableType: string;
