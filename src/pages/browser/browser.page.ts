@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
-import {KonektiloBrowserService} from '../services/konektilo-browser/konektilo-browser.service';
-import {TreeDataService} from '../services/tree-data/tree-data.service';
-import {KonektiloOpcUaServer} from '../models/KonektiloOpcUaServer';
+import {KonektiloBrowserService} from '../../services/konektilo-browser/konektilo-browser.service';
+import {TreeDataService} from '../../services/tree-data/tree-data.service';
+import {KonektiloOpcUaServer} from '../../models/KonektiloOpcUaServer';
 import {Storage} from '@ionic/storage';
 
 @Component({

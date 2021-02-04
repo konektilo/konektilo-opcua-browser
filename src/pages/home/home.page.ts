@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
-import {KonektiloOpcUaServer} from '../models/KonektiloOpcUaServer';
-import {KonektiloBrowserService} from '../services/konektilo-browser/konektilo-browser.service';
-import {KonektiloService} from '../services/konektilo/konektilo.service';
-import {KonektiloNodeResponse} from '../models/KonektiloNodeResponse';
+import {KonektiloOpcUaServer} from '../../models/KonektiloOpcUaServer';
+import {KonektiloBrowserService} from '../../services/konektilo-browser/konektilo-browser.service';
+import {KonektiloService} from '../../services/konektilo/konektilo.service';
+import {KonektiloNodeResponse} from '../../models/KonektiloNodeResponse';
 import {Storage} from '@ionic/storage';
 
 @Component({

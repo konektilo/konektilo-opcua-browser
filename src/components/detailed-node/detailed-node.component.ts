@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {KonektiloService} from '../services/konektilo/konektilo.service';
-import {KonektiloNodeResponse} from '../models/KonektiloNodeResponse';
+import {KonektiloService} from '../../services/konektilo/konektilo.service';
+import {KonektiloNodeResponse} from '../../models/KonektiloNodeResponse';
 import {ToastController} from '@ionic/angular';
 
 @Component({
