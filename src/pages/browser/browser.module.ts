@@ -10,11 +10,9 @@ import {BrowserPage} from './browser.page';
 import {MatTreeModule} from '@angular/material/tree';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
-import {KonektiloHeaderComponent} from '../../components/konektilo-header/konektilo-header.component';
-import {KonektiloFooterComponent} from '../../components/konektilo-footer/konektilo-footer.component';
-import {DetailedNodeComponent} from '../../components/detailed-node/detailed-node.component';
 import {TooltipsModule} from 'ionic4-tooltips';
 import {ClipboardModule} from '@angular/cdk/clipboard';
+import {ComponentsModule} from '../../components/components.module';
 
 @NgModule({
   imports: [
@@ -27,9 +25,10 @@ import {ClipboardModule} from '@angular/cdk/clipboard';
     MatButtonModule,
     TooltipsModule,
     ClipboardModule,
+    ComponentsModule,
     // Ionic button tooltips
   ],
-  declarations: [BrowserPage, KonektiloHeaderComponent, KonektiloFooterComponent, DetailedNodeComponent]
+  declarations: [BrowserPage]
 })
 export class BrowserPageModule {
 }

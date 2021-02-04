@@ -12,6 +12,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 import {IonicStorageModule} from '@ionic/storage';
 import {TooltipsModule} from 'ionic4-tooltips';
+import {ComponentsModule} from '../components/components.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +23,8 @@ import {TooltipsModule} from 'ionic4-tooltips';
     BrowserAnimationsModule,
     HttpClientModule,
     IonicStorageModule.forRoot(),
-    TooltipsModule.forRoot()], // Ionic button tooltips
+    TooltipsModule.forRoot(),
+    ComponentsModule], // Ionic button tooltips
   providers: [
     StatusBar,
     SplashScreen,

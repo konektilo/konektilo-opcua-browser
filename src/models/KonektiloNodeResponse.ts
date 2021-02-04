@@ -10,5 +10,5 @@ export interface KonektiloNodeResponse {
     statusCode: {
       Code: number;
     }
-  }
+  };
 }

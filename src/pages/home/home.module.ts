@@ -7,7 +7,9 @@ import {HomePage} from './home.page';
 import {HomePageRoutingModule} from './home-routing.module';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatSelectModule} from '@angular/material/select';
-import {ClipboardModule} from "@angular/cdk/clipboard";
+import {ClipboardModule} from '@angular/cdk/clipboard';
+import {BrowserPageModule} from '../browser/browser.module';
+import {ComponentsModule} from '../../components/components.module';
 
 @NgModule({
   imports: [
@@ -18,7 +20,9 @@ import {ClipboardModule} from "@angular/cdk/clipboard";
     ReactiveFormsModule,
     MatDividerModule,
     MatSelectModule,
-    ClipboardModule
+    ClipboardModule,
+    BrowserPageModule,
+    ComponentsModule
   ],
   declarations: [HomePage]
 })

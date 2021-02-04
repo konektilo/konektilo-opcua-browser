@@ -17,6 +17,10 @@ const routes: Routes = [
         loadChildren: () => import('../browser/browser.module').then(m => m.BrowserPageModule)
       },
       {
+        path: 'subscriptions',
+        loadChildren: () => import('../subscriptions/subscriptions.module').then(m => m.SubscriptionsPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'
