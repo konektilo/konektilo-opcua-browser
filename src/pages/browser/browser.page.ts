@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import {KonektiloBrowserService} from '../../services/konektilo-browser/konektilo-browser.service';
@@ -11,7 +11,7 @@ import {Storage} from '@ionic/storage';
   templateUrl: './browser.page.html',
   styleUrls: ['./browser.page.scss'],
 })
-export class BrowserPage implements OnInit {
+export class BrowserPage {
   selectedBrowseNode: KonektiloBrowseNodeInternal;
   konektiloUrl: string;
   opcUaServer: KonektiloOpcUaServer[] = [];
@@ -31,9 +31,6 @@ export class BrowserPage implements OnInit {
 
   constructor(public konektiloBrowser: KonektiloBrowserService, public treeDataService: TreeDataService, public storage: Storage) {
     this.updateKonektiloUrl();
-  }
-
-  ngOnInit() {
   }
 
   hasChild = (_: number, node: KonektiloBrowseNodeInternal) => node.expandable;

@@ -29,6 +29,7 @@ export class HomePage {
 
   constructor(public konektiloBrowser: KonektiloBrowserService, public konektilo: KonektiloService,
               public storage: Storage) {
+    // TODO Put in separate storage module
     storage.ready().then(() => {
       this.storage.get('konektiloUrl').then((konektiloUrl) => {
         if (konektiloUrl === null) {

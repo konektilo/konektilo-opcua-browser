@@ -3,6 +3,19 @@
 <ion-content>
   <div class="container">
     <div class="left-width">
+      <ion-list>
+        <ion-button (click)="onOpcUaServerClick(undefined)">all</ion-button>
+        <ion-button (click)="onOpcUaServerClick(opcUaServer)" *ngFor="let opcUaServer of subscriptions.keys()">{{opcUaServer}}</ion-button>
+      </ion-list>
+<!--      <ion-list>-->
+<!--        <ion-item-group *ngFor="let opcUaServer of subscriptions.keys()">-->
+<!--          <ion-item-divider>-->
+<!--            <ion-label>{{opcUaServer}}</ion-label>-->
+<!--          </ion-item-divider>-->
+
+<!--          <ion-item *ngFor="let subscriptionItem of subscriptions.get(opcUaServer)">{{subscriptionItem.nodeId}}</ion-item>-->
+<!--        </ion-item-group>-->
+<!--      </ion-list>-->
     </div>
     <div class="right-width">
     </div>

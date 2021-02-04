@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {SubscriptionStorageService} from '../../services/subscription-storage/subscription-storage.service';
 
 @Component({
   selector: 'app-subscriptions',
@@ -6,9 +7,17 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./subscriptions.page.scss'],
 })
 export class SubscriptionsPage implements OnInit {
-  constructor() {
+  subscriptions: Map<string, [SubscriptionNode]> = new Map<string, [SubscriptionNode]>();
+  selectedSubsNode: SubscriptionNode[] = [];
+
+  constructor(public subscriptionStorageService: SubscriptionStorageService) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.subscriptions = await this.subscriptionStorageService.getAllSubscriptions();
+  }
+
+  onOpcUaServerClick(opcUaServer: string) {
+    // TODO hier weitermachen
   }
 }

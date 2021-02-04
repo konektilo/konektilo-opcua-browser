@@ -12,7 +12,7 @@
   <ion-button (click)="onAddRemoveFavorites()" tooltip="Add node to favorites" positionV="bottom" [disabled]="buttonsDisabled">
     <ion-icon name="star"></ion-icon>
   </ion-button>
-  <ion-button (click)="onAddRemoveSubscriptions()" tooltip="Add node to subscriptions" positionV="bottom" [disabled]="buttonsDisabled">
+  <ion-button [fill]="subscriptionButtonStyle" (click)="onAddRemoveSubscriptions()" tooltip="Add node to subscriptions" positionV="bottom" [disabled]="buttonsDisabled">
     <ion-icon name="pulse"></ion-icon>
   </ion-button>
 </ion-item>
