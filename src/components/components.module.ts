@@ -8,18 +8,21 @@ import {KonektiloFooterComponent} from './konektilo-footer/konektilo-footer.comp
 import {DetailedNodeComponent} from './detailed-node/detailed-node.component';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import {TooltipsModule} from 'ionic4-tooltips';
+import {SubscriptionNodeCardComponent} from './subscription-node-card/subscription-node-card.component';
 
 
 @NgModule({
   declarations: [
     KonektiloHeaderComponent,
     KonektiloFooterComponent,
-    DetailedNodeComponent],
+    DetailedNodeComponent,
+    SubscriptionNodeCardComponent],
   imports: [IonicModule, CommonModule, FormsModule, RouterModule, ClipboardModule, TooltipsModule],
   exports: [
     KonektiloHeaderComponent,
     KonektiloFooterComponent,
-    DetailedNodeComponent]
+    DetailedNodeComponent,
+    SubscriptionNodeCardComponent]
 })
 export class ComponentsModule {
 }
