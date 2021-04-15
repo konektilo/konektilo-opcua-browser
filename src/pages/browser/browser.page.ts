@@ -5,13 +5,14 @@ import {KonektiloBrowserService} from '../../services/konektilo-browser/konektil
 import {TreeDataService} from '../../services/tree-data/tree-data.service';
 import {KonektiloOpcUaServer} from '../../models/KonektiloOpcUaServer';
 import {Storage} from '@ionic/storage';
+import {ViewWillEnter} from '@ionic/angular';
 
 @Component({
   selector: 'app-browser',
   templateUrl: './browser.page.html',
   styleUrls: ['./browser.page.scss'],
 })
-export class BrowserPage {
+export class BrowserPage implements ViewWillEnter {
   selectedBrowseNode: KonektiloBrowseNodeInternal;
   konektiloUrl: string;
   opcUaServer: KonektiloOpcUaServer[] = [];
@@ -30,7 +31,14 @@ export class BrowserPage {
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   constructor(public konektiloBrowser: KonektiloBrowserService, public treeDataService: TreeDataService, public storage: Storage) {
+  }
+
+  ionViewWillEnter(): void {
     this.updateKonektiloUrl();
+
+    if (this.selectedOpcUaServer !== undefined) {
+      this.treeDataService.getInitialTree(this.selectedOpcUaServer).then(initialTree => this.dataSource.data = initialTree);
+    }
   }
 
   hasChild = (_: number, node: KonektiloBrowseNodeInternal) => node.expandable;

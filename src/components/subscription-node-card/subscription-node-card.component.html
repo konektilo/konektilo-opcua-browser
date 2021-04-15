@@ -1,7 +1,16 @@
 <ion-card>
   <ion-card-header>
-    <ion-card-title>{{konektiloResult?.variableDisplayname}}</ion-card-title>
-    <ion-card-subtitle>{{subscriptionNode?.nodeId}}</ion-card-subtitle>
+    <ion-item lines="full">
+      <ion-card-title>{{konektiloResult?.variableDisplayname}}</ion-card-title>
+
+      <ion-button slot="end" color="danger" (click)="deleteFromSubscriptions()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-card-subtitle>{{subscriptionNode?.nodeId}}</ion-card-subtitle>
+    </ion-item>
   </ion-card-header>
 
   <ion-card-content>

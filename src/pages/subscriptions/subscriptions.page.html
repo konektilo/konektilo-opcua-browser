@@ -4,7 +4,7 @@
   <div class="container">
     <div class="left-width">
       <ion-list>
-        <ion-button (click)="onOpcUaServerClick(undefined)" expand="block">all</ion-button>
+        <ion-button (click)="onOpcUaServerClick('ALLOPCUASERVERS')" expand="block">all</ion-button>
         <ion-button (click)="onOpcUaServerClick(opcUaServer)" *ngFor="let opcUaServer of opcUaServers" expand="block">
           {{opcUaServer}}
         </ion-button>
@@ -12,7 +12,8 @@
     </div>
     <div class="right-width">
       <app-subscription-node-card *ngFor="let subscriptionNode of selectedSubsNode"
-                                  [subscriptionNode]="subscriptionNode">
+                                  [subscriptionNode]="subscriptionNode"
+                                  [onChildClickDelete]="onChildClickDelete">
       </app-subscription-node-card>
     </div>
   </div>

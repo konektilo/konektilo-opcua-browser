@@ -1,5 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit} from '@angular/core';
 import {SignalRService} from '../../services/signal-r-service/signal-r.service';
+import {SubscriptionStorageService} from '../../services/subscription-storage/subscription-storage.service';
+import {ToastController} from '@ionic/angular';
 
 @Component({
   selector: 'app-subscription-node-card',
@@ -8,6 +10,8 @@ import {SignalRService} from '../../services/signal-r-service/signal-r.service';
 })
 export class SubscriptionNodeCardComponent implements OnInit {
   @Input() subscriptionNode: SubscriptionNode;
+  @Input() onChildClickDelete: EventEmitter<SubscriptionNode>;
+
   konektiloResult: KonektiloResult = {
     nodeId: '-',
     opcUaServer: '-',
@@ -20,7 +24,7 @@ export class SubscriptionNodeCardComponent implements OnInit {
     variableType: '-'
   };
 
-  constructor(public signalRService: SignalRService) {
+  constructor(public signalRService: SignalRService, public toastController: ToastController) {
   }
 
   ngOnInit() {
@@ -29,5 +33,16 @@ export class SubscriptionNodeCardComponent implements OnInit {
         this.konektiloResult = konektiloResult;
       }
     });
+  }
+
+  async deleteFromSubscriptions() {
+    this.onChildClickDelete.emit(this.subscriptionNode);
+
+    const toast = await this.toastController.create({
+      message: 'Deleted node from subscriptions',
+      duration: 2000
+    });
+
+    await toast.present();
   }
 }
