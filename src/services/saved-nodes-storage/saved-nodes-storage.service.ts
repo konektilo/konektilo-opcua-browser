@@ -17,7 +17,9 @@ export class SavedNodesStorageService {
 
   async getAllNodes(): Promise<SavedNode[]> {
     await this.storage.ready();
-    return this.storage.get(this.storageKey);
+    const allNodes = await this.storage.get(this.storageKey);
+    this.sortListAlphabetically(allNodes);
+    return allNodes;
   }
 
   async getAllFavoriteSavedNodes(): Promise<SavedNode[]> {
@@ -96,5 +98,20 @@ export class SavedNodesStorageService {
     } else {
       return filteredNode;
     }
+  }
+
+  sortListAlphabetically(savedNodes: SavedNode[]) {
+    savedNodes.sort((a, b) => {
+      const displayNameA = a.displayName.toUpperCase();
+      const displayNameB = b.displayName.toUpperCase();
+      if (displayNameA < displayNameB) {
+        return -1;
+      }
+      if (displayNameA > displayNameB) {
+        return 1;
+      }
+
+      return 0;
+    });
   }
 }
