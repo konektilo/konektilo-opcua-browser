@@ -11,10 +11,10 @@
       </ion-list>
     </div>
     <div class="right-width">
-      <app-subscription-node-card *ngFor="let subscriptionNode of selectedSubsNodes"
-                                  [subscriptionNode]="subscriptionNode"
-                                  [onChildClickDelete]="onChildClickDelete">
-      </app-subscription-node-card>
+            <app-favorite-node-card *ngFor="let favoriteNode of selectedFavoriteNodes"
+                                        [subscriptionNode]="favoriteNode"
+                                        [onChildClickDelete]="onChildClickDelete">
+            </app-favorite-node-card>
     </div>
   </div>
 </ion-content>

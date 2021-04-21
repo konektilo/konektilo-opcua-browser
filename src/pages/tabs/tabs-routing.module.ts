@@ -17,6 +17,10 @@ const routes: Routes = [
         loadChildren: () => import('../browser/browser.module').then(m => m.BrowserPageModule)
       },
       {
+        path: 'favorites',
+        loadChildren: () => import('../favorites/favorites.module').then(m => m.FavoritesPageModule)
+      },
+      {
         path: 'subscriptions',
         loadChildren: () => import('../subscriptions/subscriptions.module').then(m => m.SubscriptionsPageModule)
       },

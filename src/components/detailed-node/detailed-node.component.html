@@ -9,7 +9,7 @@
   <ion-button (click)="updateData()" tooltip="Refresh node data" positionV="bottom" [disabled]="buttonsDisabled">
     <ion-icon name="refresh-circle"></ion-icon>
   </ion-button>
-  <ion-button (click)="onAddRemoveFavorites()" tooltip="Add node to favorites" positionV="bottom" [disabled]="buttonsDisabled">
+  <ion-button [fill]="favoriteButtonStyle" (click)="onAddRemoveFavorites()" tooltip="Add node to favorites" positionV="bottom" [disabled]="buttonsDisabled">
     <ion-icon name="star"></ion-icon>
   </ion-button>
   <ion-button [fill]="subscriptionButtonStyle" (click)="onAddRemoveSubscriptions()" tooltip="Add node to subscriptions" positionV="bottom" [disabled]="buttonsDisabled">

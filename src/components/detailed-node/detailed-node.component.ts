@@ -2,7 +2,7 @@ import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {KonektiloService} from '../../services/konektilo/konektilo.service';
 import {KonektiloNodeResponse} from '../../models/KonektiloNodeResponse';
 import {ToastController} from '@ionic/angular';
-import {SubscriptionStorageService} from '../../services/subscription-storage/subscription-storage.service';
+import {SavedNodesStorageService} from '../../services/saved-nodes-storage/saved-nodes-storage.service';
 
 @Component({
   selector: 'app-detailed-node',
@@ -12,13 +12,14 @@ import {SubscriptionStorageService} from '../../services/subscription-storage/su
 export class DetailedNodeComponent implements OnChanges {
   @Input() browseNode: KonektiloBrowseNodeInternal;
   fullNode: KonektiloNodeResponse;
-  subscriptionNode: SubscriptionNode;
+  savedNode: SavedNode;
   buttonsDisabled = true;
   dataToDisplay = '';
   subscriptionButtonStyle = 'outline';
+  favoriteButtonStyle = 'outline';
 
   constructor(public konektiloService: KonektiloService,
-              public subscriptionStorageService: SubscriptionStorageService,
+              public savedNodesStorageService: SavedNodesStorageService,
               public toastController: ToastController) {
     this.updateData();
   }
@@ -43,8 +44,21 @@ export class DetailedNodeComponent implements OnChanges {
           this.dataToDisplay = fullNode.result.variableData;
         }
 
-        this.subscriptionNode = {opcUaServer: fullNode.result.opcUaServer, nodeId: fullNode.result.nodeId};
-        this.changeSubsButtonStyle().then();
+        this.savedNode = {
+          opcUaServer: fullNode.result.opcUaServer,
+          nodeId: fullNode.result.nodeId,
+          displayName: fullNode.result.variableDisplayname,
+          savedAsSubscription: false,
+          savedAsFavorite: false
+        };
+        this.savedNodesStorageService.elementInSavedNodes(this.savedNode).then(tmpNode => {
+          if (tmpNode !== undefined) {
+            this.savedNode = tmpNode;
+          }
+
+          this.changeSubsButtonStyle().then();
+          this.changeFavoriteButtonStyle().then();
+        });
       });
     }
   }
@@ -57,22 +71,40 @@ export class DetailedNodeComponent implements OnChanges {
     await toast.present();
   }
 
-  onAddRemoveFavorites() {
-    // TODO add/remove favorites
+  async onAddRemoveFavorites() {
+    let toastText;
+
+    this.savedNode.savedAsFavorite = !this.savedNode.savedAsFavorite;
+    await this.savedNodesStorageService.saveNode(this.savedNode);
+
+    if (this.savedNode.savedAsFavorite === true) {
+      toastText = 'Added node to favorites';
+    } else {
+      toastText = 'Deleted node from favorites';
+    }
+
+    this.changeFavoriteButtonStyle().then();
+
+    const toast = await this.toastController.create({
+      message: toastText,
+      duration: 2000
+    });
+    await toast.present();
   }
 
   async onAddRemoveSubscriptions() {
     let toastText;
 
-    if (await this.subscriptionStorageService.elementInSubscriptions(this.subscriptionNode)) {
-      await this.subscriptionStorageService.deleteSubscription(this.subscriptionNode);
-      toastText = 'Deleted node from subscriptions';
-    } else {
-      await this.subscriptionStorageService.saveSubscription(this.subscriptionNode);
+    this.savedNode.savedAsSubscription = !this.savedNode.savedAsSubscription;
+    await this.savedNodesStorageService.saveNode(this.savedNode);
+
+    if (this.savedNode.savedAsSubscription === true) {
       toastText = 'Added node to subscriptions';
+    } else {
+      toastText = 'Deleted node from subscriptions';
     }
 
-    this.changeSubsButtonStyle().then();
+    await this.changeSubsButtonStyle();
 
     const toast = await this.toastController.create({
       message: toastText,
@@ -82,10 +114,18 @@ export class DetailedNodeComponent implements OnChanges {
   }
 
   async changeSubsButtonStyle() {
-    if (await this.subscriptionStorageService.elementInSubscriptions(this.subscriptionNode)) {
+    if (this.savedNode.savedAsSubscription === true) {
       this.subscriptionButtonStyle = 'solid';
     } else {
       this.subscriptionButtonStyle = 'outline';
+    }
+  }
+
+  async changeFavoriteButtonStyle() {
+    if (this.savedNode.savedAsFavorite === true) {
+      this.favoriteButtonStyle = 'solid';
+    } else {
+      this.favoriteButtonStyle = 'outline';
     }
   }
 }

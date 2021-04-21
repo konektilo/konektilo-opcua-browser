@@ -1,0 +1,12 @@
+<ion-list>
+  <ion-item button *ngIf="inSubscriptions === false" (click)="onClickClosePopover(popoverAction.AddSubscription)">
+    Add to subscriptions
+  </ion-item>
+  <ion-item button *ngIf="inSubscriptions === true" (click)="onClickClosePopover(popoverAction.RemoveSubscription)">
+    Remove from subscriptions
+  </ion-item>
+  <ion-item button *ngIf="inFavorites === false">Add to favorites</ion-item>
+  <ion-item button *ngIf="inFavorites === true">Remove from favorites</ion-item>
+  <ion-item button>Copy konektilo URL for node</ion-item>
+  <ion-item lines="none" button (click)="onClickClosePopover(popoverAction.Close)">Close</ion-item>
+</ion-list>

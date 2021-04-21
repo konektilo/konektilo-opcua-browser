@@ -56,7 +56,7 @@ export class SignalRService {
     });
   }
 
-  public subscribeToNode(subscriptionNode: SubscriptionNode): void {
+  public subscribeToNode(subscriptionNode: SavedNode): void {
     const extractedNode = NodeConverterService.extractNode(subscriptionNode.nodeId);
     if (this.connection.state === signalR.HubConnectionState.Connected) {
       // this.connection.send('Subscription', 'opcuatestserver', '3', 'cvar_48', 'String').then();
