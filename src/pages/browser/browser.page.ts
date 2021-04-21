@@ -53,7 +53,7 @@ export class BrowserPage implements ViewWillEnter {
 
   fetchOpcUaServer() {
     this.opcUaServer = [];
-    this.konektiloBrowser.readOpcUaServer(this.konektiloUrl).subscribe(konektiloResponse => {
+    this.konektiloBrowser.readOpcUaServer().then(konektiloResponse => {
       Object.keys(konektiloResponse.result).forEach(opcUaServer => this.opcUaServer.push(konektiloResponse.result[opcUaServer]));
     });
   }

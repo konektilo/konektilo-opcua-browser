@@ -34,7 +34,7 @@ export class DetailedNodeComponent implements OnChanges {
 
   updateData() {
     if (this.browseNode !== undefined) {
-      this.konektiloService.readNode(this.browseNode.accessUrl).subscribe(fullNode => {
+      this.konektiloService.readNode(this.browseNode.accessUrl).then(fullNode => {
         this.fullNode = fullNode;
         this.buttonsDisabled = fullNode === undefined; // Disabled buttons if no node selected
 

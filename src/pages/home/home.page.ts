@@ -3,7 +3,6 @@ import {KonektiloOpcUaServer} from '../../models/KonektiloOpcUaServer';
 import {KonektiloBrowserService} from '../../services/konektilo-browser/konektilo-browser.service';
 import {SettingsStorageService} from '../../services/settings-storage/settings-storage.service';
 import {ToastController} from '@ionic/angular';
-import {catchError} from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -46,21 +45,20 @@ export class HomePage {
   connectToKonektilo() {
     this.opcUaServer = [];
 
-    // @ts-ignore
-    this.konektiloBrowser.readOpcUaServer(this.konektiloUrlInput).pipe(catchError(error => {
-      this.showConnectionStatus(false, error?.statusText).then();
-    })).subscribe(konektiloResponse => {
+    this.konektiloBrowser.readOpcUaServer().then(konektiloResponse => {
       this.connectionSuccessful = true;
-      // @ts-ignore
       Object.keys(konektiloResponse.result).forEach(opcuaServer => this.opcUaServer.push(konektiloResponse.result[opcuaServer]));
-      this.showConnectionStatus(true, '').then();
+      this.showConnectionStatus('').then();
+    }).catch(error => {
+      this.connectionSuccessful = false;
+      this.showConnectionStatus(error?.statusText).then();
     });
   }
 
-  async showConnectionStatus(successful: boolean, errorMessage: string) {
+  async showConnectionStatus(errorMessage: string) {
     let message;
 
-    if (successful) {
+    if (this.connectionSuccessful) {
       message = 'Connected successfully, found ' + this.opcUaServer.length + ' OPC-UA server(s)';
     } else {
       message = 'Could not connect to konektilo: ' + errorMessage;

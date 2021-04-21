@@ -13,7 +13,7 @@ export class TreeDataService {
 
   async getInitialTree(konektiloOpcUaServer: KonektiloOpcUaServer): Promise<KonektiloBrowseNodeInternal[]> {
     this.treeData = [];
-    const konektiloBrowseResponse = await this.konektiloBrowser.readNode(konektiloOpcUaServer.browseUrl).toPromise();
+    const konektiloBrowseResponse = await this.konektiloBrowser.readNode(konektiloOpcUaServer.browseUrl);
     Object.entries(konektiloBrowseResponse.result).forEach(([key, value]) => {
       const intBrowseNode = value as unknown as KonektiloBrowseNodeInternal;
       intBrowseNode.nodeId = key;
@@ -33,7 +33,7 @@ export class TreeDataService {
       // TODO: Improve error handling if node not found
       return;
     }
-    const konektiloBrowseResponse = await this.konektiloBrowser.readNode(foundBrowseNode.browseUrl).toPromise();
+    const konektiloBrowseResponse = await this.konektiloBrowser.readNode(foundBrowseNode.browseUrl);
     Object.entries(konektiloBrowseResponse.result).forEach(([key, value]) => {
       const intBrowseNode = value as unknown as KonektiloBrowseNodeInternal;
       intBrowseNode.nodeId = key;
