@@ -8,6 +8,8 @@
           <ion-col>
             <ion-item>
               <ion-label class="customLabel">Configure connection to konektilo</ion-label>
+              <ion-badge *ngIf="connectionSuccessful" color="primary" slot="end">Connected</ion-badge>
+              <ion-badge *ngIf="!connectionSuccessful" color="danger" slot="end">Disconnected</ion-badge>
             </ion-item>
           </ion-col>
         </ion-row>
