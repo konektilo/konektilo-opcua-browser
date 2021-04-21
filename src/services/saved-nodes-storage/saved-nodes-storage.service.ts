@@ -38,6 +38,7 @@ export class SavedNodesStorageService {
     if (nodeIndex !== -1) {
       if (savedNode.savedAsFavorite === false && savedNode.savedAsSubscription === false) {
         await this.deleteSavedNode(savedNode);
+        return;
       } else {
         savedNodes[nodeIndex] = savedNode;
       }

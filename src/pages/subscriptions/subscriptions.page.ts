@@ -17,10 +17,7 @@ export class SubscriptionsPage implements ViewWillEnter {
 
   constructor(public savedNodesStorageService: SavedNodesStorageService, public signalRService: SignalRService) {
     this.onChildClickDelete.subscribe(savedNode => {
-      this.savedNodesStorageService.deleteSavedNode(savedNode).then();
-
-      const index = this.selectedSubsNodes.findIndex(e => e.nodeId === savedNode.nodeId &&
-        e.opcUaServer === savedNode.opcUaServer);
+      const index = this.selectedSubsNodes.findIndex(e => e.nodeId === savedNode.nodeId && e.opcUaServer === savedNode.opcUaServer);
 
       if (index > -1) {
         this.selectedSubsNodes.splice(index, 1);

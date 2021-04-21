@@ -16,14 +16,12 @@ export class FavoritesPage implements ViewWillEnter {
 
   constructor(public savedNodesStorageService: SavedNodesStorageService) {
     this.onChildClickDelete.subscribe(subscriptionNode => {
-      // this.savedNodesStorageService.deleteFavorite(subscriptionNode).then();
-      //
-      // const index = this.selectedFavoriteNodes.findIndex(e => e.nodeId === subscriptionNode.nodeId &&
-      //   e.opcUaServer === subscriptionNode.opcUaServer);
-      //
-      // if (index > -1) {
-      //   this.selectedFavoriteNodes.splice(index, 1);
-      // }
+      const index = this.selectedFavoriteNodes.findIndex(e => e.nodeId === subscriptionNode.nodeId &&
+        e.opcUaServer === subscriptionNode.opcUaServer);
+
+      if (index > -1) {
+        this.selectedFavoriteNodes.splice(index, 1);
+      }
     });
   }
 
