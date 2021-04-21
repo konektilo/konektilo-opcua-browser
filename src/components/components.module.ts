@@ -9,7 +9,7 @@ import {DetailedNodeComponent} from './detailed-node/detailed-node.component';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import {TooltipsModule} from 'ionic4-tooltips';
 import {NodeCardComponent} from './node-card/node-card.component';
-import {FavoriteSubscriptionPopoverComponent} from './favorite-subscription-popover/favorite-subscription-popover.component';
+import {NodeCardPopoverComponent} from './node-card-popover/node-card-popover.component';
 
 
 @NgModule({
@@ -18,14 +18,14 @@ import {FavoriteSubscriptionPopoverComponent} from './favorite-subscription-popo
     KonektiloFooterComponent,
     DetailedNodeComponent,
     NodeCardComponent,
-    FavoriteSubscriptionPopoverComponent],
+    NodeCardPopoverComponent],
   imports: [IonicModule, CommonModule, FormsModule, RouterModule, ClipboardModule, TooltipsModule],
   exports: [
     KonektiloHeaderComponent,
     KonektiloFooterComponent,
     DetailedNodeComponent,
     NodeCardComponent,
-    FavoriteSubscriptionPopoverComponent]
+    NodeCardPopoverComponent]
 })
 export class ComponentsModule {
 }

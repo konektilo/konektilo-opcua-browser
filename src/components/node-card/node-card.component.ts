@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit} from '@angular/core';
 import {SignalRService} from '../../services/signal-r-service/signal-r.service';
 import {PopoverController, ToastController} from '@ionic/angular';
-import {FavoriteSubscriptionPopoverComponent} from '../favorite-subscription-popover/favorite-subscription-popover.component';
+import {NodeCardPopoverComponent} from '../node-card-popover/node-card-popover.component';
 import {PopoverAction} from '../../models/PopoverAction';
 
 @Component({
@@ -41,7 +41,7 @@ export class NodeCardComponent implements OnInit {
 
   async onClickPopover(ev: any) {
     const popover = await this.popoverController.create({
-      component: FavoriteSubscriptionPopoverComponent,
+      component: NodeCardPopoverComponent,
       event: ev,
       translucent: true,
       componentProps: {

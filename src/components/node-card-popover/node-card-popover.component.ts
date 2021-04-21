@@ -5,11 +5,11 @@ import {SavedNodesStorageService} from '../../services/saved-nodes-storage/saved
 import {AccessUrlBuilderService} from '../../services/access-url/access-url-builder.service';
 
 @Component({
-  selector: 'app-favorite-subscription-popover',
-  templateUrl: './favorite-subscription-popover.component.html',
-  styleUrls: ['./favorite-subscription-popover.component.scss'],
+  selector: 'app-node-card-popover',
+  templateUrl: './node-card-popover.component.html',
+  styleUrls: ['./node-card-popover.component.scss'],
 })
-export class FavoriteSubscriptionPopoverComponent implements OnInit {
+export class NodeCardPopoverComponent implements OnInit {
   popoverAction = PopoverAction;
   savedNode: SavedNode;
 
