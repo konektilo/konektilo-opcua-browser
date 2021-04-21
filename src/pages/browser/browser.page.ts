@@ -34,7 +34,7 @@ export class BrowserPage implements ViewWillEnter {
   }
 
   ionViewWillEnter(): void {
-    this.updateKonektiloUrl();
+    this.fetchOpcUaServers();
 
     if (this.selectedOpcUaServer !== undefined) {
       this.treeDataService.getInitialTree(this.selectedOpcUaServer).then(initialTree => this.dataSource.data = initialTree);
@@ -51,23 +51,10 @@ export class BrowserPage implements ViewWillEnter {
     this.selectedBrowseNode = browseNode;
   }
 
-  fetchOpcUaServer() {
+  fetchOpcUaServers() {
     this.opcUaServer = [];
     this.konektiloBrowser.readOpcUaServer().then(konektiloResponse => {
       Object.keys(konektiloResponse.result).forEach(opcUaServer => this.opcUaServer.push(konektiloResponse.result[opcUaServer]));
-    });
-  }
-
-  updateKonektiloUrl() {
-    this.storage.ready().then(() => {
-      this.storage.get('konektiloUrl').then((konektiloUrl) => {
-        if (konektiloUrl === null) {
-          this.konektiloUrl = 'http://localhost:80';
-        } else {
-          this.konektiloUrl = konektiloUrl;
-        }
-        this.fetchOpcUaServer();
-      });
     });
   }
 

@@ -6,9 +6,24 @@ import {KonektiloOpcUaServer} from '../../models/KonektiloOpcUaServer';
   providedIn: 'root'
 })
 export class TreeDataService {
-  treeData: KonektiloBrowseNodeInternal[] = [];
 
   constructor(public konektiloBrowser: KonektiloBrowserService) {
+  }
+  treeData: KonektiloBrowseNodeInternal[] = [];
+
+  private static sortListAlphabetically(browseNodeInternals: KonektiloBrowseNodeInternal[]) {
+    browseNodeInternals.sort((a, b) => {
+      const nameA = a.name.toUpperCase();
+      const nameB = b.name.toUpperCase();
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+
+      return 0;
+    });
   }
 
   async getInitialTree(konektiloOpcUaServer: KonektiloOpcUaServer): Promise<KonektiloBrowseNodeInternal[]> {
@@ -24,6 +39,8 @@ export class TreeDataService {
       intBrowseNode.level = undefined;
       this.treeData.push(intBrowseNode);
     });
+
+    TreeDataService.sortListAlphabetically(this.treeData);
     return this.treeData;
   }
 
@@ -44,6 +61,8 @@ export class TreeDataService {
       intBrowseNode.level = undefined;
       foundBrowseNode.children.push(intBrowseNode);
     });
+
+    TreeDataService.sortListAlphabetically(foundBrowseNode.children);
     return this.treeData;
   }
 
@@ -61,5 +80,9 @@ export class TreeDataService {
       }
     }
     return undefined;
+  }
+
+  private createIntBrowseNode() {
+    // TODO for removing duplicated code
   }
 }

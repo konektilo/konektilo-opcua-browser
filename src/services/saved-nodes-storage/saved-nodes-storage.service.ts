@@ -5,7 +5,6 @@ import {Storage} from '@ionic/storage';
   providedIn: 'root'
 })
 export class SavedNodesStorageService {
-  storageKey = 'savedNodes';
 
   constructor(public storage: Storage) {
     this.getAllNodes().then(subscriptions => {
@@ -14,11 +13,27 @@ export class SavedNodesStorageService {
       }
     });
   }
+  storageKey = 'savedNodes';
+
+  private static sortListAlphabetically(savedNodes: SavedNode[]) {
+    savedNodes.sort((a, b) => {
+      const displayNameA = a.displayName.toUpperCase();
+      const displayNameB = b.displayName.toUpperCase();
+      if (displayNameA < displayNameB) {
+        return -1;
+      }
+      if (displayNameA > displayNameB) {
+        return 1;
+      }
+
+      return 0;
+    });
+  }
 
   async getAllNodes(): Promise<SavedNode[]> {
     await this.storage.ready();
     const allNodes = await this.storage.get(this.storageKey);
-    this.sortListAlphabetically(allNodes);
+    SavedNodesStorageService.sortListAlphabetically(allNodes);
     return allNodes;
   }
 
@@ -98,20 +113,5 @@ export class SavedNodesStorageService {
     } else {
       return filteredNode;
     }
-  }
-
-  sortListAlphabetically(savedNodes: SavedNode[]) {
-    savedNodes.sort((a, b) => {
-      const displayNameA = a.displayName.toUpperCase();
-      const displayNameB = b.displayName.toUpperCase();
-      if (displayNameA < displayNameB) {
-        return -1;
-      }
-      if (displayNameA > displayNameB) {
-        return 1;
-      }
-
-      return 0;
-    });
   }
 }
