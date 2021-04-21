@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {NavParams, PopoverController} from '@ionic/angular';
+import {NavParams, PopoverController, ToastController} from '@ionic/angular';
 import {PopoverAction} from '../../models/PopoverAction';
 import {SavedNodesStorageService} from '../../services/saved-nodes-storage/saved-nodes-storage.service';
+import {AccessUrlBuilderService} from '../../services/access-url/access-url-builder.service';
 
 @Component({
   selector: 'app-favorite-subscription-popover',
@@ -14,6 +15,7 @@ export class FavoriteSubscriptionPopoverComponent implements OnInit {
 
   constructor(public navParams: NavParams,
               public popoverController: PopoverController,
+              public toastController: ToastController,
               public savedNodesStorageService: SavedNodesStorageService) {
   }
 
@@ -42,5 +44,17 @@ export class FavoriteSubscriptionPopoverComponent implements OnInit {
     }
 
     await this.popoverController.dismiss({action: popoverAction});
+  }
+
+  createAccessUrl() {
+    return AccessUrlBuilderService.build(this.savedNode);
+  }
+
+  async showCopyToast() {
+    const toast = await this.toastController.create({
+      message: 'Konektlo URL of node copied to clipboard.',
+      duration: 2000
+    });
+    await toast.present();
   }
 }
