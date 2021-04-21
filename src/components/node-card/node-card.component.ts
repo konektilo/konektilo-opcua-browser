@@ -5,13 +5,14 @@ import {FavoriteSubscriptionPopoverComponent} from '../favorite-subscription-pop
 import {PopoverAction} from '../../models/PopoverAction';
 
 @Component({
-  selector: 'app-subscription-node-card',
-  templateUrl: './subscription-node-card.component.html',
-  styleUrls: ['./subscription-node-card.component.scss'],
+  selector: 'app-node-card',
+  templateUrl: './node-card.component.html',
+  styleUrls: ['./node-card.component.scss'],
 })
-export class SubscriptionNodeCardComponent implements OnInit {
-  @Input() subscriptionNode: SavedNode;
+export class NodeCardComponent implements OnInit {
+  @Input() savedNode: SavedNode;
   @Input() onChildClickDelete: EventEmitter<SavedNode>;
+  @Input() isSubscriptionCard: boolean;
 
   konektiloResult: KonektiloResult = {
     nodeId: '-',
@@ -24,29 +25,18 @@ export class SubscriptionNodeCardComponent implements OnInit {
     variableStatusCode: '-',
     variableType: '-'
   };
-  inSubscriptions = true;
-  inFavorites = true;
 
   constructor(public signalRService: SignalRService, public toastController: ToastController, public popoverController: PopoverController) {
   }
 
   ngOnInit() {
-    this.signalRService.getNewMessageSubscription().subscribe(konektiloResult => {
-      if (this.subscriptionNode.nodeId === konektiloResult.nodeId && this.subscriptionNode.opcUaServer === konektiloResult.opcUaServer) {
-        this.konektiloResult = konektiloResult;
-      }
-    });
-  }
-
-  async deleteFromSubscriptions() {
-    this.onChildClickDelete.emit(this.subscriptionNode);
-
-    const toast = await this.toastController.create({
-      message: 'Deleted node from subscriptions',
-      duration: 2000
-    });
-
-    await toast.present();
+    if (this.isSubscriptionCard === true) {
+      this.signalRService.getNewMessageSubscription().subscribe(konektiloResult => {
+        if (this.savedNode.nodeId === konektiloResult.nodeId && this.savedNode.opcUaServer === konektiloResult.opcUaServer) {
+          this.konektiloResult = konektiloResult;
+        }
+      });
+    }
   }
 
   async onClickPopover(ev: any) {
@@ -55,8 +45,7 @@ export class SubscriptionNodeCardComponent implements OnInit {
       event: ev,
       translucent: true,
       componentProps: {
-        inSubscriptions: this.inSubscriptions,
-        inFavorites: false
+        savedNode: this.savedNode
       }
     });
 
@@ -66,10 +55,8 @@ export class SubscriptionNodeCardComponent implements OnInit {
 
     switch (data?.action) {
       case PopoverAction.RemoveSubscription:
-        this.inSubscriptions = false;
-        await this.deleteFromSubscriptions();
-        break;
-      case PopoverAction.AddFavorite:
+      case PopoverAction.RemoveFavorite:
+        this.onChildClickDelete.emit(this.savedNode);
         break;
     }
   }
