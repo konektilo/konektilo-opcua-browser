@@ -50,7 +50,6 @@ export class SavedNodesStorageService {
   }
 
   async deleteSavedNode(savedNode: SavedNode): Promise<any> {
-    await this.storage.ready();
     const savedNodes = await this.getAllNodes();
 
     const index = savedNodes.findIndex(item => item.nodeId === savedNode.nodeId);
@@ -67,9 +66,7 @@ export class SavedNodesStorageService {
   }
 
   async elementInSavedNodes(savedNode: SavedNode): Promise<undefined | SavedNode> {
-    await this.storage.ready();
     const savedNodes = await this.getAllNodes();
-
     return savedNodes.find(item => item.nodeId === savedNode.nodeId && item.opcUaServer === savedNode.opcUaServer);
   }
 

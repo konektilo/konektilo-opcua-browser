@@ -7,7 +7,6 @@ import {KonektiloNodeResponse} from '../../models/KonektiloNodeResponse';
   providedIn: 'root'
 })
 export class KonektiloService {
-
   constructor(public http: HttpClient) {
   }
 
