@@ -5,15 +5,18 @@ import {Storage} from '@ionic/storage';
   providedIn: 'root'
 })
 export class SavedNodesStorageService {
+  storageKey = 'savedNodes';
 
   constructor(public storage: Storage) {
-    this.getAllNodes().then(subscriptions => {
-      if (subscriptions === null) {
-        this.storage.set(this.storageKey, []);
+    this.storage.ready().then(_ => {
+      this.storage.get(this.storageKey).then(savedNodes => {
+        if (savedNodes === null) {
+          this.storage.set(this.storageKey, []);
+        }
+      });
       }
-    });
+    );
   }
-  storageKey = 'savedNodes';
 
   private static sortListAlphabetically(savedNodes: SavedNode[]) {
     savedNodes.sort((a, b) => {
