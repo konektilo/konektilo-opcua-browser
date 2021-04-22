@@ -66,7 +66,8 @@ export class HomePage {
 
     const toast = await this.toastController.create({
       message,
-      duration: 2000
+      duration: 2000,
+      position: 'top'
     });
     await toast.present();
   }

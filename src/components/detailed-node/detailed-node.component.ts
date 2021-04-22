@@ -66,7 +66,8 @@ export class DetailedNodeComponent implements OnChanges {
   async showCopyToast() {
     const toast = await this.toastController.create({
       message: 'Konektlo URL of node copied to clipboard.',
-      duration: 2000
+      duration: 2000,
+      position: 'top'
     });
     await toast.present();
   }
@@ -87,7 +88,8 @@ export class DetailedNodeComponent implements OnChanges {
 
     const toast = await this.toastController.create({
       message: toastText,
-      duration: 2000
+      duration: 2000,
+      position: 'top'
     });
     await toast.present();
   }
@@ -108,7 +110,8 @@ export class DetailedNodeComponent implements OnChanges {
 
     const toast = await this.toastController.create({
       message: toastText,
-      duration: 2000
+      duration: 2000,
+      position: 'top'
     });
     await toast.present();
   }

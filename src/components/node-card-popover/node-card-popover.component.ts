@@ -53,7 +53,8 @@ export class NodeCardPopoverComponent implements OnInit {
   async showCopyToast() {
     const toast = await this.toastController.create({
       message: 'Konektlo URL of node copied to clipboard.',
-      duration: 2000
+      duration: 2000,
+      position: 'top'
     });
     await toast.present();
   }
