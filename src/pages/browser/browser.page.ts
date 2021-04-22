@@ -14,7 +14,6 @@ import {ViewWillEnter} from '@ionic/angular';
 })
 export class BrowserPage implements ViewWillEnter {
   selectedBrowseNode: KonektiloBrowseNodeInternal;
-  konektiloUrl: string;
   opcUaServer: KonektiloOpcUaServer[] = [];
   selectedOpcUaServer: KonektiloOpcUaServer;
 
@@ -33,7 +32,7 @@ export class BrowserPage implements ViewWillEnter {
   constructor(public konektiloBrowser: KonektiloBrowserService, public treeDataService: TreeDataService, public storage: Storage) {
   }
 
-  ionViewWillEnter(): void {
+  ionViewWillEnter() {
     this.fetchOpcUaServers();
 
     if (this.selectedOpcUaServer !== undefined) {
