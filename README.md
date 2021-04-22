@@ -16,7 +16,7 @@ version: '3.7'
 
 services:
   konektilo:
-    image: konektilodockerhub/konektilo_test_user:latest
+    image:  konektilodockerhub/konektilo:latest
     container_name: konektilo
     ports:
       - "8080:80"
