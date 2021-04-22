@@ -1,18 +1,18 @@
 import {Injectable} from '@angular/core';
 import {NodeConverterService} from '../node-converter/node-converter.service';
+import {SettingsStorageService} from '../settings-storage/settings-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccessUrlBuilderService {
-  constructor() {
+  constructor(public settingsStorage: SettingsStorageService) {
   }
 
-  public static build(savedNode: SavedNode): string {
-    // TODO get baseUrl dynamic
-    const baseUrl = 'http://localhost:5000/api/v1/server/';
+  async build(savedNode: SavedNode): Promise<string> {
+    const baseUrl = await this.settingsStorage.getSettings();
     const extractedNode = NodeConverterService.extractNode(savedNode.nodeId);
-    return baseUrl + savedNode.opcUaServer + '/namespace/' + extractedNode.namespace + '/identifier/' + extractedNode.nodeId +
-      '?identifierType=' + extractedNode.nodeTypeLong;
+    return baseUrl.konektiloUrl + '/api/v1/server/' + savedNode.opcUaServer + '/namespace/' + extractedNode.namespace + '/identifier/'
+      + extractedNode.nodeId + '?identifierType=' + extractedNode.nodeTypeLong;
   }
 }

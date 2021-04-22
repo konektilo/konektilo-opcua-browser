@@ -15,7 +15,7 @@
             (click)="onClickClosePopover(popoverAction.RemoveFavorite)">
     Remove from favorites
   </ion-item>
-  <ion-item button [cdkCopyToClipboard]="createAccessUrl()" (click)="showCopyToast()">
+  <ion-item button (click)="copyToClipboard()">
     Copy konektilo URL
   </ion-item>
   <ion-item lines="none" button (click)="onClickClosePopover(popoverAction.Close)">Close</ion-item>

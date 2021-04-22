@@ -16,7 +16,8 @@ export class NodeCardPopoverComponent implements OnInit {
   constructor(public navParams: NavParams,
               public popoverController: PopoverController,
               public toastController: ToastController,
-              public savedNodesStorageService: SavedNodesStorageService) {
+              public savedNodesStorageService: SavedNodesStorageService,
+              public accessUrlBuilderService: AccessUrlBuilderService) {
   }
 
   ngOnInit() {
@@ -46,11 +47,22 @@ export class NodeCardPopoverComponent implements OnInit {
     await this.popoverController.dismiss({action: popoverAction});
   }
 
-  createAccessUrl() {
-    return AccessUrlBuilderService.build(this.savedNode);
-  }
+  async copyToClipboard() {
+    const accessUrl = await this.accessUrlBuilderService.build(this.savedNode);
 
-  async showCopyToast() {
+    // Copy to clipboard
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = accessUrl;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+
     const toast = await this.toastController.create({
       message: 'Konektlo URL of node copied to clipboard.',
       duration: 2000,
