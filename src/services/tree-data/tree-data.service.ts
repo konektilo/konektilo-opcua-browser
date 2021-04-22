@@ -26,18 +26,22 @@ export class TreeDataService {
     });
   }
 
+  private static createIntBrowseNode(key: string, internalBrowseNode: any): KonektiloBrowseNodeInternal {
+    internalBrowseNode.nodeId = key;
+    internalBrowseNode.name = internalBrowseNode.displayName;
+    internalBrowseNode.children = [];
+    internalBrowseNode.childrenFetched = false;
+    internalBrowseNode.expandable = internalBrowseNode.childCount > 0;
+    internalBrowseNode.level = undefined;
+    return internalBrowseNode;
+  }
+
   async getInitialTree(konektiloOpcUaServer: KonektiloOpcUaServer): Promise<KonektiloBrowseNodeInternal[]> {
     this.treeData = [];
     const konektiloBrowseResponse = await this.konektiloBrowser.readNode(konektiloOpcUaServer.browseUrl);
     Object.entries(konektiloBrowseResponse.result).forEach(([key, value]) => {
       const intBrowseNode = value as unknown as KonektiloBrowseNodeInternal;
-      intBrowseNode.nodeId = key;
-      intBrowseNode.name = value.displayName;
-      intBrowseNode.children = [];
-      intBrowseNode.childrenFetched = false;
-      intBrowseNode.expandable = intBrowseNode.childCount > 0;
-      intBrowseNode.level = undefined;
-      this.treeData.push(intBrowseNode);
+      this.treeData.push(TreeDataService.createIntBrowseNode(key, intBrowseNode));
     });
 
     TreeDataService.sortListAlphabetically(this.treeData);
@@ -53,13 +57,7 @@ export class TreeDataService {
     const konektiloBrowseResponse = await this.konektiloBrowser.readNode(foundBrowseNode.browseUrl);
     Object.entries(konektiloBrowseResponse.result).forEach(([key, value]) => {
       const intBrowseNode = value as unknown as KonektiloBrowseNodeInternal;
-      intBrowseNode.nodeId = key;
-      intBrowseNode.name = value.displayName;
-      intBrowseNode.children = [];
-      intBrowseNode.childrenFetched = false;
-      intBrowseNode.expandable = intBrowseNode.childCount > 0;
-      intBrowseNode.level = undefined;
-      foundBrowseNode.children.push(intBrowseNode);
+      foundBrowseNode.children.push(TreeDataService.createIntBrowseNode(key, intBrowseNode));
     });
 
     TreeDataService.sortListAlphabetically(foundBrowseNode.children);
@@ -80,9 +78,5 @@ export class TreeDataService {
       }
     }
     return undefined;
-  }
-
-  private createIntBrowseNode() {
-    // TODO for removing duplicated code
   }
 }
