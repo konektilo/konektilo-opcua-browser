@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
 import {NodeConverterService} from '../node-converter/node-converter.service';
-import * as signalR from '@microsoft/signalR';
+import * as signalR from '@microsoft/signalr';
 import {SettingsStorageService} from '../settings-storage/settings-storage.service';
 
 @Injectable({
