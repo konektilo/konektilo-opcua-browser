@@ -24,22 +24,23 @@
         <ion-row>
           <ion-col>
             <ion-item>
-              <ion-label class="customLabel">optional</ion-label>
+              <ion-label class="customLabel">Authentication</ion-label>
+              <ion-toggle slot="end" [(ngModel)]="authenticationOn"></ion-toggle>
             </ion-item>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <ion-item>
-              <ion-label>user</ion-label>
+            <ion-item [disabled]="!authenticationOn">
+              <ion-label>username:</ion-label>
               <ion-input [(ngModel)]="konektiloUserInput" type="url" autocorrect="off" class="urlInput"></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <ion-item>
-              <ion-label>password</ion-label>
+            <ion-item [disabled]="!authenticationOn">
+              <ion-label>password:</ion-label>
               <ion-input [(ngModel)]="konektiloPasswordInput" type="url" autocorrect="off" class="urlInput"></ion-input>
             </ion-item>
           </ion-col>
@@ -53,23 +54,44 @@
     </div>
 
     <div class="right-width">
+      <h1>Welcome to konektilo OPC-UA Browser</h1>
+
+      <h2>OPC-UA Browser documentation</h2>
+      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+      standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+      type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,
+      remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing
+      Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions
+        of Lorem Ipsum.</p>
+
+      <h2>Konektilo tipps & tricks</h2>
       <p>
-        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-        dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-        clita
-        kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-        sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-        voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-        sanctus est Lorem ipsum dolor sit amet.
+        1. <a href="https://bit.ly/2SMhfqV">Getting Started User Documentation</a> | We have created a getting started
+        user
+        documentation for you. With this, you can quickly and easily use konektilo within in a few minutes.
       </p>
       <p>
-        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-        dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-        clita
-        kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-        sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-        voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-        sanctus est Lorem ipsum dolor sit amet.
+        2. <a href="https://bit.ly/3b76eqo">Example Configuration for konektilo</a> | To provide maximum help we set up
+        a minimal
+        configuration file that you can use for your first tests with konektilo. Adjust it to your needs and check out
+        the power of konektilo!
+      </p>
+      <p>
+        3. <a href="https://bit.ly/3ceL7nn">API Documentation konektilo</a> | Transparency is very important. That's why
+        we created
+        an overview for you of all available API endpoints of konektilo. You can easily go through them and even try
+        them out.
+      </p>
+      <p>
+        4. <a href="https://bit.ly/2WB51Cr">Useful Tools for you</a> | With the right tooling, you can achieve more. We
+        created a list
+        of public available opc-ua servers and other tools that will help you right from the start to work with
+        konektilo more efficiently.
+      </p>
+      <p>
+        5. <a href="https://bit.ly/2K7D6Yp">License agreement</a> | The corresponding license agreement can be found in
+        our service
+        center.
       </p>
     </div>
   </div>

@@ -10,7 +10,7 @@ export class SettingsStorageService {
   constructor(public storage: Storage) {
     this.getSettings().then(subscriptions => {
       if (subscriptions === null) {
-        this.storage.set(this.storageKey, {konektiloUrl: undefined, user: undefined, password: undefined});
+        this.storage.set(this.storageKey, {konektiloUrl: undefined, user: undefined, password: undefined, authenticationOn: false});
       }
     });
   }

@@ -16,6 +16,7 @@ export class HomePage {
   konektiloUrlInput: string;
   konektiloUserInput: string;
   konektiloPasswordInput: string;
+  authenticationOn = false;
 
   konektiloSettings: KonektiloSettings;
 
@@ -24,6 +25,7 @@ export class HomePage {
               public settingsStorageService: SettingsStorageService) {
     this.settingsStorageService.getSettings().then(konektiloSettings => {
       this.konektiloSettings = konektiloSettings;
+      this.authenticationOn = konektiloSettings.authenticationOn;
       if (konektiloSettings.konektiloUrl === undefined) {
         this.konektiloUrlInput = 'http://localhost:80';
       } else {
@@ -37,6 +39,7 @@ export class HomePage {
     this.konektiloSettings.konektiloUrl = this.konektiloUrlInput;
     this.konektiloSettings.user = this.konektiloUserInput;
     this.konektiloSettings.password = this.konektiloPasswordInput;
+    this.konektiloSettings.authenticationOn = this.authenticationOn;
     await this.settingsStorageService.saveSettings(this.konektiloSettings);
 
     this.connectToKonektilo();
