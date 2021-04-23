@@ -5,23 +5,44 @@ import {Storage} from '@ionic/storage';
   providedIn: 'root'
 })
 export class SettingsStorageService {
-  storageKey = 'konektiloSettings';
+  settingsStorageKey = 'konektiloSettings';
+  tokenStorageKey = 'token';
 
   constructor(public storage: Storage) {
-    this.getSettings().then(subscriptions => {
-      if (subscriptions === null) {
-        this.storage.set(this.storageKey, {konektiloUrl: undefined, user: undefined, password: undefined, authenticationOn: false});
-      }
+    this.storage.ready().then(_ => {
+      this.getSettings().then(settings => {
+        if (settings === null) {
+          this.storage.set(this.settingsStorageKey,
+            {konektiloUrl: undefined, user: undefined, password: undefined, authenticationOn: false});
+        }
+      });
+
+      this.getSettings().then(token => {
+        if (token === null) {
+          this.storage.set(this.tokenStorageKey, undefined);
+        }
+      });
     });
   }
 
   async getSettings(): Promise<KonektiloSettings> {
     await this.storage.ready();
-    return this.storage.get(this.storageKey);
+    return this.storage.get(this.settingsStorageKey);
   }
 
   async saveSettings(konektiloSettings: KonektiloSettings): Promise<any> {
     await this.storage.ready();
-    return this.storage.set(this.storageKey, konektiloSettings);
+    return this.storage.set(this.settingsStorageKey, konektiloSettings);
+  }
+
+  async getToken(): Promise<KonektiloSettings> {
+    await this.storage.ready();
+    return this.storage.get(this.tokenStorageKey);
+  }
+
+  async saveToken(token: string): Promise<any> {
+    await this.storage.ready();
+    console.log(token);
+    return this.storage.set(this.tokenStorageKey, token);
   }
 }
