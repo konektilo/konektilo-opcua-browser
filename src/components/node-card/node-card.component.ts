@@ -3,6 +3,8 @@ import {SignalRService} from '../../services/signal-r-service/signal-r.service';
 import {PopoverController, ToastController} from '@ionic/angular';
 import {NodeCardPopoverComponent} from '../node-card-popover/node-card-popover.component';
 import {PopoverAction} from '../../models/PopoverAction';
+import {KonektiloService} from '../../services/konektilo/konektilo.service';
+import {AccessUrlBuilderService} from '../../services/access-url/access-url-builder.service';
 
 @Component({
   selector: 'app-node-card',
@@ -14,6 +16,7 @@ export class NodeCardComponent implements OnInit {
   @Input() onChildClickDelete: EventEmitter<SavedNode>;
   @Input() isSubscriptionCard: boolean;
 
+  accessUrl: string;
   konektiloResult: KonektiloResult = {
     nodeId: '-',
     opcUaServer: '-',
@@ -26,10 +29,15 @@ export class NodeCardComponent implements OnInit {
     variableType: '-'
   };
 
-  constructor(public signalRService: SignalRService, public toastController: ToastController, public popoverController: PopoverController) {
+  constructor(public accessUrlBuilderService: AccessUrlBuilderService,
+              public signalRService: SignalRService,
+              public konektiloService: KonektiloService,
+              public toastController: ToastController,
+              public popoverController: PopoverController) {
   }
 
   ngOnInit() {
+    // TODO Do not import/activate signalR service on favorite page
     if (this.isSubscriptionCard === true) {
       this.signalRService.getNewMessageSubscription().subscribe(konektiloResult => {
         if (this.savedNode.nodeId === konektiloResult.nodeId && this.savedNode.opcUaServer === konektiloResult.opcUaServer) {
@@ -58,6 +66,19 @@ export class NodeCardComponent implements OnInit {
       case PopoverAction.RemoveFavorite:
         this.onChildClickDelete.emit(this.savedNode);
         break;
+    }
+  }
+
+  async updateData() {
+    if (this.savedNode !== undefined) {
+
+      if (this.accessUrl === undefined) {
+        this.accessUrl = await this.accessUrlBuilderService.build(this.savedNode);
+      }
+
+      this.konektiloService.readNode(this.accessUrl).then(fullNode => {
+        this.konektiloResult = fullNode.result;
+      });
     }
   }
 }
