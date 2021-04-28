@@ -77,7 +77,9 @@ export class NodeCardComponent implements OnInit {
       }
 
       this.konektiloService.readNode(this.accessUrl).then(fullNode => {
-        this.konektiloResult = fullNode.result;
+        if (fullNode !== undefined) {
+          this.konektiloResult = fullNode.result;
+        }
       });
     }
   }
