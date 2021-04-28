@@ -9,19 +9,19 @@ export class AuthenticationService {
   constructor(public http: HttpClient, public settingsStorage: SettingsStorageService) {
   }
 
-  async login(): Promise<[boolean, string]> {
-    const loginResp = [false, ''];
+  async login(): Promise<LoginResponse> {
+    const loginResp = {loginSuccessful: false, errorMessage: ''};
 
     const konektiloSettings = await this.settingsStorage.getSettings();
     const user = {username: konektiloSettings.user, password: konektiloSettings.password};
 
     await this.http.post<User>(konektiloSettings.konektiloUrl + '/api/v1/authenticate', user).toPromise().then(userResp => {
       if (userResp.token !== undefined) {
-        loginResp[0] = true;
+        loginResp.loginSuccessful = true;
         this.settingsStorage.saveToken(userResp.token);
       }
     }).catch(error => {
-      loginResp[1] = error?.error?.message;
+      loginResp.errorMessage = error?.error?.message;
     });
 
     return loginResp;

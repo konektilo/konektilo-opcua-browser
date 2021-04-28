@@ -11,13 +11,14 @@ export class SignalRService {
   private connection: signalR.HubConnection;
   private newMessagesSubscription = new Subject<KonektiloResult>();
 
-  constructor(public settingsStorageService: SettingsStorageService) {
-    settingsStorageService.getSettings().then(konektiloSettings => {
+  constructor(public settingsStorage: SettingsStorageService) {
+    settingsStorage.getSettings().then(konektiloSettings => {
       this.connection = new signalR.HubConnectionBuilder()
         .configureLogging(signalR.LogLevel.Debug)
         .withUrl(konektiloSettings.konektiloUrl + '/ws/v1', {
           skipNegotiation: true,
-          transport: signalR.HttpTransportType.WebSockets
+          transport: signalR.HttpTransportType.WebSockets,
+          // accessTokenFactory: SignalRService.testToken
         })
         .withAutomaticReconnect()
         .build();
@@ -29,7 +30,23 @@ export class SignalRService {
       // TODO
       // this.connection.onreconnected(() => this.subscribeToNodes());
 
-      this.connection.start();
+      this.connection.start().then();
+    });
+  }
+
+  // private async getToken(): Promise<string> {
+  //   console.log('hit');
+  //   const token = await this.settingsStorage.getToken();
+  //   console.log(token);
+  //   return token;
+  // }
+
+  // TODO signalr service needs static method to get token
+  private static testToken(): Promise<string> {
+    return new Promise((resolve, reject) => {
+      console.log('asd');
+      resolve('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiMSIsIm5iZiI6MTYxOTE3NDM0NywiZXhwIjoxNjE5Nzc5MTQ3LCJpYXQiOjE2MTkxNzQzNDd9.azneNlKQQ10_0-SVt_Z3RgpwcW3oYxYsUt6YHktgUjE');
+      reject('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiMSIsIm5iZiI6MTYxOTE3NDM0NywiZXhwIjoxNjE5Nzc5MTQ3LCJpYXQiOjE2MTkxNzQzNDd9.azneNlKQQ10_0-SVt_Z3RgpwcW3oYxYsUt6YHktgUjE');
     });
   }
 

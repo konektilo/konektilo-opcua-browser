@@ -32,17 +32,22 @@ export class SettingsStorageService {
 
   async saveSettings(konektiloSettings: KonektiloSettings): Promise<any> {
     await this.storage.ready();
+
+    // Delete token if auth is disabled
+    if (konektiloSettings.authenticationOn === false) {
+      await this.saveToken(undefined);
+    }
+
     return this.storage.set(this.settingsStorageKey, konektiloSettings);
   }
 
-  async getToken(): Promise<KonektiloSettings> {
+  async getToken(): Promise<string> {
     await this.storage.ready();
     return this.storage.get(this.tokenStorageKey);
   }
 
   async saveToken(token: string): Promise<any> {
     await this.storage.ready();
-    console.log(token);
     return this.storage.set(this.tokenStorageKey, token);
   }
 }

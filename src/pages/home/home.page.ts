@@ -23,9 +23,9 @@ export class HomePage {
 
   constructor(public toastController: ToastController,
               public konektiloBrowser: KonektiloBrowserService,
-              public settingsStorageService: SettingsStorageService,
+              public settingsStorage: SettingsStorageService,
               public authenticationService: AuthenticationService) {
-    this.settingsStorageService.getSettings().then(konektiloSettings => {
+    this.settingsStorage.getSettings().then(konektiloSettings => {
       this.konektiloSettings = konektiloSettings;
       this.authenticationOn = konektiloSettings.authenticationOn;
       this.konektiloUserInput = konektiloSettings.user;
@@ -45,14 +45,14 @@ export class HomePage {
     this.konektiloSettings.user = this.konektiloUserInput;
     this.konektiloSettings.password = this.konektiloPasswordInput;
     this.konektiloSettings.authenticationOn = this.authenticationOn;
-    await this.settingsStorageService.saveSettings(this.konektiloSettings);
+    await this.settingsStorage.saveSettings(this.konektiloSettings);
 
     await this.connectToKonektilo();
   }
 
   async connectToKonektilo() {
     this.opcUaServer = [];
-    let loginResp = [false, ''];
+    let loginResp = {loginSuccessful: false, errorMessage: ''};
 
     if (this.konektiloSettings.authenticationOn === true) {
       loginResp = await this.authenticationService.login();
@@ -60,13 +60,13 @@ export class HomePage {
     }
 
     // If login is enabled and fails, don't connect to konektilo
-    if (this.konektiloSettings.authenticationOn === true && loginResp[0] === false) {
+    if (this.konektiloSettings.authenticationOn === true && loginResp.loginSuccessful === false) {
       return;
     }
 
     this.konektiloBrowser.readOpcUaServer().then(konektiloResponse => {
       this.connectionSuccessful = true;
-      Object.keys(konektiloResponse.result).forEach(opcuaServer => this.opcUaServer.push(konektiloResponse.result[opcuaServer]));
+      Object.keys(konektiloResponse.result).forEach(opcUaServer => this.opcUaServer.push(konektiloResponse.result[opcUaServer]));
       this.showConnectionStatus('').then();
     }).catch(error => {
       this.connectionSuccessful = false;
@@ -74,13 +74,13 @@ export class HomePage {
     });
   }
 
-  async showLoginStatus(loginResp: [boolean, string]) {
+  async showLoginStatus(loginResp: LoginResponse) {
     let message;
 
-    if (loginResp[0] === true) {
+    if (loginResp.loginSuccessful === true) {
       message = 'Login successful';
     } else {
-      message = 'Could not login: ' + loginResp[1];
+      message = 'Could not login: ' + loginResp.errorMessage;
     }
 
     const toast = await this.toastController.create({
