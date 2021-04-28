@@ -9,11 +9,11 @@ export class SavedNodesStorageService {
 
   constructor(public storage: Storage) {
     this.storage.ready().then(_ => {
-      this.storage.get(this.storageKey).then(savedNodes => {
-        if (savedNodes === null) {
-          this.storage.set(this.storageKey, []);
-        }
-      });
+        this.storage.get(this.storageKey).then(savedNodes => {
+          if (savedNodes === null) {
+            this.storage.set(this.storageKey, []);
+          }
+        });
       }
     );
   }
@@ -40,14 +40,50 @@ export class SavedNodesStorageService {
     return allNodes;
   }
 
+  generateOpcUaServerListItems(opcUaServers: string[]): OpcUaServerListItem[] {
+    const opcUaServerListItems = [];
+    let lastChar = '';
+
+    for (let i = 0, len = opcUaServers.length; i < len; i++) {
+      const item = opcUaServers[i];
+
+      if (item.charAt(0) !== lastChar) {
+        opcUaServerListItems.push({name: item.charAt(0).toUpperCase(), letter: true});
+        lastChar = item.charAt(0);
+      }
+
+      opcUaServerListItems.push({name: item, letter: false});
+    }
+
+    return opcUaServerListItems;
+  }
+
   async getAllFavoriteSavedNodes(): Promise<SavedNode[]> {
     const savedNodes = await this.getAllNodes();
     return savedNodes.filter(savedNode => savedNode.savedAsFavorite === true);
   }
 
+  async getAllFavSavedNodesDisplayName(): Promise<OpcUaServerListItem[]> {
+    const savedNodes = await this.getAllFavoriteSavedNodes();
+    const opcUaServers = Array.from(new Set(savedNodes.map(item => item.opcUaServer)));
+
+    opcUaServers.unshift('All');
+
+    return this.generateOpcUaServerListItems(opcUaServers);
+  }
+
   async getAllSubscriptionSavedNodes(): Promise<SavedNode[]> {
     const savedNodes = await this.getAllNodes();
     return savedNodes.filter(savedNode => savedNode.savedAsSubscription === true);
+  }
+
+  async getAllSubSavedNodesDisplayName(): Promise<OpcUaServerListItem[]> {
+    const savedNodes = await this.getAllSubscriptionSavedNodes();
+    const opcUaServers = Array.from(new Set(savedNodes.map(item => item.opcUaServer)));
+
+    opcUaServers.unshift('All');
+
+    return this.generateOpcUaServerListItems(opcUaServers);
   }
 
   async saveNode(savedNode: SavedNode): Promise<any> {

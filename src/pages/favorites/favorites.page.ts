@@ -9,7 +9,7 @@ import {SavedNodesStorageService} from '../../services/saved-nodes-storage/saved
 })
 export class FavoritesPage implements ViewWillEnter {
   allSavedFavoriteNodes: SavedNode[] = [];
-  opcUaServers: Set<string> = new Set();
+  opcUaServers: OpcUaServerListItem[] = [];
   selectedFavoriteNodes: SavedNode[] = [];
   selectedOpcUaServer: string;
   onChildClickDelete = new EventEmitter<SavedNode>();
@@ -27,7 +27,7 @@ export class FavoritesPage implements ViewWillEnter {
 
   async ionViewWillEnter() {
     this.allSavedFavoriteNodes = await this.savedNodesStorageService.getAllFavoriteSavedNodes();
-    this.opcUaServers = new Set(this.allSavedFavoriteNodes.map(item => item.opcUaServer));
+    this.opcUaServers = await this.savedNodesStorageService.getAllFavSavedNodesDisplayName();
 
     if (this.selectedOpcUaServer !== undefined) {
       this.onOpcUaServerClick(this.selectedOpcUaServer);
@@ -38,7 +38,7 @@ export class FavoritesPage implements ViewWillEnter {
     this.selectedOpcUaServer = opcUaServer;
     this.selectedFavoriteNodes = [];
 
-    if (opcUaServer === 'ALLOPCUASERVERS') {
+    if (opcUaServer.toLowerCase() === 'all') {
       this.allSavedFavoriteNodes.forEach(savedNode => {
         this.selectedFavoriteNodes.push(savedNode);
       });
