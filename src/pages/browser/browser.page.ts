@@ -38,10 +38,6 @@ export class BrowserPage implements ViewWillEnter {
     if (this.opcUaServers.length > 0 && this.selectedOpcUaServer === undefined) {
       this.selectedOpcUaServer = this.opcUaServers[0];
     }
-
-    if (this.selectedOpcUaServer !== undefined) {
-      this.treeDataService.getInitialTree(this.selectedOpcUaServer).then(initialTree => this.dataSource.data = initialTree);
-    }
   }
 
   hasChild = (_: number, node: KonektiloBrowseNodeInternal) => node.expandable;
@@ -61,9 +57,6 @@ export class BrowserPage implements ViewWillEnter {
     if (konektiloResponse.result !== undefined) {
       Object.keys(konektiloResponse.result).forEach(opcUaServerKey => this.opcUaServers.push(konektiloResponse.result[opcUaServerKey]));
     }
-    // this.konektiloBrowser.readOpcUaServer().then(konektiloResponse => {
-    //   Object.keys(konektiloResponse.result).forEach(opcUaServerKey => this.opcUaServers.push(konektiloResponse.result[opcUaServerKey]));
-    // });
   }
 
   selectOpcUaServer() {
