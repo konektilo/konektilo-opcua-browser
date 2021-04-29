@@ -3,6 +3,7 @@ import {Subject} from 'rxjs';
 import {NodeConverterService} from '../node-converter/node-converter.service';
 import * as signalR from '@microsoft/signalr';
 import {SettingsStorageService} from '../settings-storage/settings-storage.service';
+import {Storage} from '@ionic/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,11 @@ export class SignalRService {
   constructor(public settingsStorage: SettingsStorageService) {
     settingsStorage.getSettings().then(konektiloSettings => {
       this.connection = new signalR.HubConnectionBuilder()
-        .configureLogging(signalR.LogLevel.Debug)
+        .configureLogging(signalR.LogLevel.Error)
         .withUrl(konektiloSettings.konektiloUrl + '/ws/v1', {
           skipNegotiation: true,
           transport: signalR.HttpTransportType.WebSockets,
-          // accessTokenFactory: SignalRService.testToken
+          accessTokenFactory: SignalRService.getToken
         })
         .withAutomaticReconnect()
         .build();
@@ -27,27 +28,15 @@ export class SignalRService {
         this.newMessagesSubscription.next(variableData);
       });
 
-      // TODO
-      // this.connection.onreconnected(() => this.subscribeToNodes());
-
       this.connection.start().then();
     });
   }
 
-  // private async getToken(): Promise<string> {
-  //   console.log('hit');
-  //   const token = await this.settingsStorage.getToken();
-  //   console.log(token);
-  //   return token;
-  // }
-
-  // TODO signalr service needs static method to get token
-  private static testToken(): Promise<string> {
-    return new Promise((resolve, reject) => {
-      console.log('asd');
-      resolve('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiMSIsIm5iZiI6MTYxOTE3NDM0NywiZXhwIjoxNjE5Nzc5MTQ3LCJpYXQiOjE2MTkxNzQzNDd9.azneNlKQQ10_0-SVt_Z3RgpwcW3oYxYsUt6YHktgUjE');
-      reject('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiMSIsIm5iZiI6MTYxOTE3NDM0NywiZXhwIjoxNjE5Nzc5MTQ3LCJpYXQiOjE2MTkxNzQzNDd9.azneNlKQQ10_0-SVt_Z3RgpwcW3oYxYsUt6YHktgUjE');
-    });
+  private static async getToken(): Promise<string> {
+    // @ts-ignore
+    const storage = new Storage();
+    await storage.ready();
+    return storage.get('token');
   }
 
   public subscribeToNode(subscriptionNode: SavedNode): void {
