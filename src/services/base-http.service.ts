@@ -10,17 +10,18 @@ export class BaseHttpService {
   }
 
   async showToast(error: any) {
-    console.log(error);
     let errorMessage = `Error: ${error.message}`;
 
-    if (error?.error?.description !== undefined && error?.error?.messages !== undefined) {
+    if (error?.error?.description !== null && error?.error?.messages !== null) {
       errorMessage = error.error.description + ', message(s): ' + error.error.messages.join(', ');
-    } else if (error.error.description !== undefined) {
+    } else if (error.error.description !== null) {
       errorMessage = error.error.description;
     } else if (error.error instanceof ErrorEvent) {
       errorMessage = `Error: ${error.error.message}`;
     } else if (error.status === 420) {
       errorMessage = 'You have to accept konektilo license agreement before you can use konektilo!';
+    } else if (error.status === 420 && error.description !== null) {
+      errorMessage = error.description;
     }
 
     const toast = await this.toastController.create({
