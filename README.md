@@ -3,20 +3,20 @@
 The konektilo opc-ua browser is an ionic app which you can use with konektilo to explore the structure of you connected opc-ua servers.
 The app is developed with ionic 5.
 Below you can see an overview of the different components of konektilo.
-If you would like to test and include konektilo as RESTful api for opc-ua you can find the free version here: ```https://konektilo.de/testuser```
+If you would like to test and include konektilo as RESTful api for opc-ua you can find the free version here: ```https://konektilo.de```
 
 ![alt text](graphics/konektilo-opcua-browser.png "konektilo opcua browser overview")
 
 # getting started
 * Download konektilo docker image
-    * If you would like to test and include konektilo as RESTful api for opc-ua you can find the free version here: ```https://konektilo.de/testuser```
+    * If you would like to test and include konektilo as RESTful api for opc-ua you can find the free version here: ```https://konektilo.de```
 * Use this docker-compose file for starting konektilo and konektilo-opcua-browser
 ```
 version: '3.7'
 
 services:
   konektilo:
-    image: konektilodockerhub/konektilo_test_user:latest
+    image:  konektilodockerhub/konektilo:latest
     container_name: konektilo
     ports:
       - "8080:80"

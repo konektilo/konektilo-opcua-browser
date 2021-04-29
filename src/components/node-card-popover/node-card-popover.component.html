@@ -1,0 +1,21 @@
+<ion-list>
+  <ion-item button *ngIf="savedNode?.savedAsSubscription === false"
+            (click)="onClickClosePopover(popoverAction.AddSubscription)">
+    Add to subscriptions
+  </ion-item>
+  <ion-item button *ngIf="savedNode?.savedAsSubscription === true"
+            (click)="onClickClosePopover(popoverAction.RemoveSubscription)">
+    Remove from subscriptions
+  </ion-item>
+  <ion-item button *ngIf="savedNode?.savedAsFavorite === false"
+            (click)="onClickClosePopover(popoverAction.AddFavorite)">
+    Add to favorites
+  </ion-item>
+  <ion-item button *ngIf="savedNode?.savedAsFavorite === true"
+            (click)="onClickClosePopover(popoverAction.RemoveFavorite)">
+    Remove from favorites
+  </ion-item>
+  <ion-item button (click)="onClickClosePopover(popoverAction.CopyKonektiloUrl)">
+    Copy konektilo URL
+  </ion-item>
+</ion-list>

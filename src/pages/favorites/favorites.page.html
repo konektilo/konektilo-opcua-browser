@@ -1,0 +1,29 @@
+<app-konektilo-header title="OPC-UA Browser"></app-konektilo-header>
+
+<ion-content>
+  <div class="container">
+    <div class="left-width">
+      <ion-list>
+        <div *ngFor="let opcUaServer of opcUaServers">
+          <ion-button *ngIf="opcUaServer.letter === false" expand="block"
+                      (click)="onOpcUaServerClick(opcUaServer.name)">
+            {{opcUaServer.name}}
+          </ion-button>
+
+          <ion-item-divider *ngIf="opcUaServer.letter === true">
+            <ion-label>
+              {{opcUaServer.name}}
+            </ion-label>
+          </ion-item-divider>
+        </div>
+      </ion-list>
+    </div>
+    <div class="right-width">
+      <app-node-card *ngFor="let favoriteNode of selectedFavoriteNodes"
+                     [savedNode]="favoriteNode"
+                     [onChildClickDelete]="onChildClickDelete"
+                     [isSubscriptionCard]="false">
+      </app-node-card>
+    </div>
+  </div>
+</ion-content>

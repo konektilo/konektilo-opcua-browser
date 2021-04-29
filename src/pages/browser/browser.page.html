@@ -1,0 +1,47 @@
+<app-konektilo-header title="OPC-UA Browser"></app-konektilo-header>
+
+<ion-content>
+  <div class="container">
+    <div class="left-width">
+      <ion-item>
+        <ion-label class="customLabel">Selected OPC-UA server</ion-label>
+        <ion-select interface="action-sheet" [(ngModel)]="selectedOpcUaServer" [compareWith]="compareOpcUaServer"
+                    (ionChange)="selectOpcUaServer()">
+          <ion-select-option *ngFor="let server of opcUaServers" [value]="server">{{server.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-content scrollY="true" class="treeHeight">
+        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+
+          <!-- This is the tree node for leaf nodes -->
+          <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+            <!-- use a disabled button to provide padding for tree leaf -->
+            <button mat-icon-button disabled>
+              <mat-icon class="mat-icon-rtl-mirror">
+                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+              </mat-icon>
+            </button>
+            <ion-button (click)="readNode(node)">{{node.name}}</ion-button>
+          </mat-tree-node>
+
+          <!-- This is the tree node for expandable nodes -->
+          <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+            <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name"
+                    (click)="onExpandNode(node)">
+              <mat-icon class="mat-icon-rtl-mirror">
+                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+              </mat-icon>
+            </button>
+            {{node.name}}
+          </mat-tree-node>
+
+        </mat-tree>
+      </ion-content>
+    </div>
+
+    <div class="right-width">
+      <app-detailed-node [browseNode]="selectedBrowseNode"></app-detailed-node>
+    </div>
+  </div>
+</ion-content>

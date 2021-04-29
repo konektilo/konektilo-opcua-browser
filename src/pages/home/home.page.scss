@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  height: 100%;
+}
+
+.right-width {
+  padding: 20px;
+}
+
+.left-width {
+  flex: 1 0 50%;
+  border-right: 2px solid var(--ion-tab-bar-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.07))));
+}
+
+.customLabel {
+  color: #19B814;
+  font-family: "Rubik Bold", sans-serif;
+  font-weight: bold;
+}
