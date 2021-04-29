@@ -9,25 +9,19 @@ export class SettingsStorageService {
   tokenStorageKey = 'token';
 
   constructor(public storage: Storage) {
-    this.storage.ready().then(_ => {
-      this.getSettings().then(settings => {
-        if (settings === null) {
-          this.storage.set(this.settingsStorageKey,
-            {konektiloUrl: undefined, user: undefined, password: undefined, authenticationOn: false});
-        }
-      });
-
-      this.getSettings().then(token => {
-        if (token === null) {
-          this.storage.set(this.tokenStorageKey, undefined);
-        }
-      });
-    });
   }
 
   async getSettings(): Promise<KonektiloSettings> {
     await this.storage.ready();
-    return this.storage.get(this.settingsStorageKey);
+    let konektiloSettings = await this.storage.get(this.settingsStorageKey);
+
+    if (konektiloSettings === null) {
+      await this.storage.set(this.settingsStorageKey,
+        {konektiloUrl: undefined, user: undefined, password: undefined, authenticationOn: false});
+      konektiloSettings = await this.storage.get(this.settingsStorageKey);
+    }
+
+    return konektiloSettings;
   }
 
   async saveSettings(konektiloSettings: KonektiloSettings): Promise<any> {
@@ -43,7 +37,14 @@ export class SettingsStorageService {
 
   async getToken(): Promise<string> {
     await this.storage.ready();
-    return this.storage.get(this.tokenStorageKey);
+    let token = await this.storage.get(this.tokenStorageKey);
+
+    if (token === null) {
+      await this.storage.set(this.tokenStorageKey, undefined);
+      token = undefined;
+    }
+
+    return token;
   }
 
   async saveToken(token: string): Promise<any> {
