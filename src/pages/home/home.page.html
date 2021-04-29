@@ -41,7 +41,8 @@
           <ion-col>
             <ion-item [disabled]="!authenticationOn">
               <ion-label>password:</ion-label>
-              <ion-input [(ngModel)]="konektiloPasswordInput" type="password" autocorrect="off" class="urlInput"></ion-input>
+              <ion-input [(ngModel)]="konektiloPasswordInput" type="password" autocorrect="off"
+                         class="urlInput"></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -56,13 +57,26 @@
     <div class="right-width">
       <h1>Welcome to konektilo OPC-UA Browser</h1>
 
-      <h2>OPC-UA Browser documentation</h2>
-      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-      standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
-      type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,
-      remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing
-      Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions
-        of Lorem Ipsum.</p>
+      <p>The konektilo OPC-UA Browser is an ionic app which you can use with konektilo to explore the structure of you
+        connected OPC-UA servers. konektilo opc-ua browser is an open source project. For more information please visit
+        the
+        <a href="hhttps://github.com/konektilo/konektilo-opcua-browser/blob/master/README.md">project page</a>.
+      </p>
+
+      <h2>First steps</h2>
+
+      <p>
+        1. Enter the URL of konektilo on the left side. Authentication options are optional.
+      </p>
+
+      <p>
+        2. Save the entered data by clicking "SAVE & CONNECT". The connection status to konektilo is also displayed on
+        this page.
+      </p>
+
+      <p>
+        3. Explore your OPC-UA servers by clicking on "Browser" in the bottom menu.
+      </p>
 
       <h2>Konektilo tipps & tricks</h2>
       <p>
