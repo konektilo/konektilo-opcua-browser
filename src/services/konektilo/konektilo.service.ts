@@ -17,20 +17,7 @@ export class KonektiloService extends BaseHttpService {
     return this.http.get<KonektiloNodeResponse>(accessUrl)
       .pipe(
         catchError(error => {
-          let errorMessage: string;
-
-          if (error?.error?.description !== undefined && error?.error?.messages !== undefined) {
-            errorMessage = error.error.description + ', message(s): ' + error.error.messages.join(', ');
-          } else if (error.error.description !== undefined) {
-            errorMessage = error.error.description;
-          } else if (error.error instanceof ErrorEvent) {
-            errorMessage = `Error: ${error.error.message}`;
-
-          } else {
-            errorMessage = `Error: ${error.message}`;
-          }
-
-          this.showToast(errorMessage);
+          this.showToast(error);
 
           return [];
         })

@@ -67,10 +67,9 @@ export class HomePage {
     this.konektiloBrowser.readOpcUaServer().then(konektiloResponse => {
       this.connectionSuccessful = true;
       Object.keys(konektiloResponse.result).forEach(opcUaServer => this.opcUaServer.push(konektiloResponse.result[opcUaServer]));
-      this.showConnectionStatus('').then();
-    }).catch(error => {
+      this.showConnectionStatus().then();
+    }).catch(_ => {
       this.connectionSuccessful = false;
-      this.showConnectionStatus(error?.statusText).then();
     });
   }
 
@@ -91,13 +90,11 @@ export class HomePage {
     await toast.present();
   }
 
-  async showConnectionStatus(errorMessage: string) {
+  async showConnectionStatus() {
     let message;
 
     if (this.connectionSuccessful) {
       message = 'Connected successfully, found ' + this.opcUaServer.length + ' OPC-UA server(s)';
-    } else {
-      message = 'Could not connect to konektilo: ' + errorMessage;
     }
 
     const toast = await this.toastController.create({

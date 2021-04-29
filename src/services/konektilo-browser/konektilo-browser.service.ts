@@ -22,20 +22,7 @@ export class KonektiloBrowserService extends BaseHttpService {
     return this.http.get<KonektiloResponse<KonektiloOpcUaServer>>(konektiloSettings.konektiloUrl + '/api/' + this.apiVersion +
       '/browse').pipe(
       catchError(error => {
-        let errorMessage: string;
-
-        if (error?.error?.description !== undefined && error?.error?.messages !== undefined) {
-          errorMessage = error.error.description + ', message(s): ' + error.error.messages.join(', ');
-        } else if (error.error.description !== undefined) {
-          errorMessage = error.error.description;
-        } else if (error.error instanceof ErrorEvent) {
-          errorMessage = `Error: ${error.error.message}`;
-
-        } else {
-          errorMessage = `Error: ${error.message}`;
-        }
-
-        this.showToast(errorMessage);
+        this.showToast(error);
 
         return [];
       })
@@ -45,20 +32,7 @@ export class KonektiloBrowserService extends BaseHttpService {
   async readNode(opcUaServerBrowseUrl: string): Promise<KonektiloResponse<KonektiloBrowseNode>> {
     return this.http.get<KonektiloResponse<KonektiloBrowseNode>>(opcUaServerBrowseUrl).pipe(
       catchError(error => {
-        let errorMessage: string;
-
-        if (error?.error?.description !== undefined && error?.error?.messages !== undefined) {
-          errorMessage = error.error.description + ', message(s): ' + error.error.messages.join(', ');
-        } else if (error.error.description !== undefined) {
-          errorMessage = error.error.description;
-        } else if (error.error instanceof ErrorEvent) {
-          errorMessage = `Error: ${error.error.message}`;
-
-        } else {
-          errorMessage = `Error: ${error.message}`;
-        }
-
-        this.showToast(errorMessage);
+        this.showToast(error);
 
         return [];
       })

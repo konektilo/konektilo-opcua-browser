@@ -37,7 +37,6 @@ export class NodeCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    // TODO Do not import/activate signalR service on favorite page
     if (this.isSubscriptionCard === true) {
       this.signalRService.getNewMessageSubscription().subscribe(konektiloResult => {
         if (this.savedNode.nodeId === konektiloResult.nodeId && this.savedNode.opcUaServer === konektiloResult.opcUaServer) {
