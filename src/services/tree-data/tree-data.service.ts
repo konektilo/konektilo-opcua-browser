@@ -9,6 +9,7 @@ export class TreeDataService {
 
   constructor(public konektiloBrowser: KonektiloBrowserService) {
   }
+
   treeData: KonektiloBrowseNodeInternal[] = [];
 
   private static sortListAlphabetically(browseNodeInternals: KonektiloBrowseNodeInternal[]) {
@@ -39,6 +40,11 @@ export class TreeDataService {
   async getInitialTree(konektiloOpcUaServer: KonektiloOpcUaServer): Promise<KonektiloBrowseNodeInternal[]> {
     this.treeData = [];
     const konektiloBrowseResponse = await this.konektiloBrowser.readNode(konektiloOpcUaServer.browseUrl);
+
+    if (konektiloBrowseResponse === undefined) {
+      return this.treeData;
+    }
+
     Object.entries(konektiloBrowseResponse.result).forEach(([key, value]) => {
       const intBrowseNode = value as unknown as KonektiloBrowseNodeInternal;
       this.treeData.push(TreeDataService.createIntBrowseNode(key, intBrowseNode));
@@ -50,10 +56,11 @@ export class TreeDataService {
 
   async nodeExpanded(browseNode: KonektiloBrowseNodeInternal) {
     const foundBrowseNode = this.searchTree(browseNode);
+
     if (foundBrowseNode === undefined) {
-      // TODO: Improve error handling if node not found
       return;
     }
+
     const konektiloBrowseResponse = await this.konektiloBrowser.readNode(foundBrowseNode.browseUrl);
     Object.entries(konektiloBrowseResponse.result).forEach(([key, value]) => {
       const intBrowseNode = value as unknown as KonektiloBrowseNodeInternal;

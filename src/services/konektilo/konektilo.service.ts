@@ -3,12 +3,14 @@ import {HttpClient} from '@angular/common/http';
 import {KonektiloNodeResponse} from '../../models/KonektiloNodeResponse';
 import {catchError} from 'rxjs/operators';
 import {ToastController} from '@ionic/angular';
+import {BaseHttpService} from '../base-http.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class KonektiloService {
+export class KonektiloService extends BaseHttpService {
   constructor(public http: HttpClient, public toastController: ToastController) {
+    super(toastController);
   }
 
   async readNode(accessUrl: string): Promise<KonektiloNodeResponse> {
@@ -19,11 +21,9 @@ export class KonektiloService {
 
           if (error?.error?.description !== undefined && error?.error?.messages !== undefined) {
             errorMessage = error.error.description + ', message(s): ' + error.error.messages.join(', ');
-          }
-          else if (error.error.description !== undefined) {
+          } else if (error.error.description !== undefined) {
             errorMessage = error.error.description;
-          }
-          else if (error.error instanceof ErrorEvent) {
+          } else if (error.error instanceof ErrorEvent) {
             errorMessage = `Error: ${error.error.message}`;
 
           } else {
@@ -35,14 +35,5 @@ export class KonektiloService {
           return [];
         })
       ).toPromise();
-  }
-
-  async showToast(errorMessage: string) {
-    const toast = await this.toastController.create({
-      message: 'HTTP request failed: ' + errorMessage,
-      duration: 5000,
-      position: 'top'
-    });
-    await toast.present();
   }
 }

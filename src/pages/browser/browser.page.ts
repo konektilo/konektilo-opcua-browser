@@ -58,6 +58,7 @@ export class BrowserPage implements ViewWillEnter {
   }
 
   selectOpcUaServer() {
+    this.dataSource.data = [];
     this.treeDataService.getInitialTree(this.selectedOpcUaServer).then(initialTree => this.dataSource.data = initialTree);
   }
 
