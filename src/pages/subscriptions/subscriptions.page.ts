@@ -10,7 +10,7 @@ import {ViewWillEnter} from '@ionic/angular';
 })
 export class SubscriptionsPage implements ViewWillEnter {
   allSavedSubscriptionNodes: SavedNode[] = [];
-  opcUaServers: Set<string> = new Set();
+  opcUaServers: OpcUaServerListItem[] = [];
   selectedSubsNodes: SavedNode[] = [];
   selectedOpcUaServer: string;
   onChildClickDelete = new EventEmitter<SavedNode>();
@@ -27,7 +27,7 @@ export class SubscriptionsPage implements ViewWillEnter {
 
   async ionViewWillEnter() {
     this.allSavedSubscriptionNodes = await this.savedNodesStorageService.getAllSubscriptionSavedNodes();
-    this.opcUaServers = new Set(this.allSavedSubscriptionNodes.map(item => item.opcUaServer));
+    this.opcUaServers = await this.savedNodesStorageService.getAllSubSavedNodesDisplayName();
 
     if (this.selectedOpcUaServer !== undefined) {
       this.onOpcUaServerClick(this.selectedOpcUaServer);
@@ -38,7 +38,7 @@ export class SubscriptionsPage implements ViewWillEnter {
     this.selectedOpcUaServer = opcUaServer;
     this.selectedSubsNodes = [];
 
-    if (opcUaServer === 'ALLOPCUASERVERS') {
+    if (opcUaServer.toLowerCase() === 'all') {
       this.allSavedSubscriptionNodes.forEach(savedNode => {
         this.signalRService.subscribeToNode(savedNode);
         this.selectedSubsNodes.push(savedNode);

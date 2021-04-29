@@ -4,10 +4,18 @@
   <div class="container">
     <div class="left-width">
       <ion-list>
-        <ion-button (click)="onOpcUaServerClick('ALLOPCUASERVERS')" expand="block">all</ion-button>
-        <ion-button (click)="onOpcUaServerClick(opcUaServer)" *ngFor="let opcUaServer of opcUaServers" expand="block">
-          {{opcUaServer}}
-        </ion-button>
+        <div *ngFor="let opcUaServer of opcUaServers">
+          <ion-button *ngIf="opcUaServer.letter === false" expand="block"
+                      (click)="onOpcUaServerClick(opcUaServer.name)">
+            {{opcUaServer.name}}
+          </ion-button>
+
+          <ion-item-divider *ngIf="opcUaServer.letter === true">
+            <ion-label>
+              {{opcUaServer.name}}
+            </ion-label>
+          </ion-item-divider>
+        </div>
       </ion-list>
     </div>
     <div class="right-width">

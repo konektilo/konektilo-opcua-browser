@@ -5,13 +5,6 @@
     <div class="left-width">
       <ion-list>
         <div *ngFor="let opcUaServer of opcUaServers">
-          <!--          TODO Decide if button or item-->
-          <!--          <ion-item *ngIf="opcUaServer.letter === false" (click)="onOpcUaServerClick(opcUaServer.name)">-->
-          <!--            <ion-label>-->
-          <!--              {{opcUaServer.name}}-->
-          <!--            </ion-label>-->
-          <!--          </ion-item>-->
-
           <ion-button *ngIf="opcUaServer.letter === false" expand="block"
                       (click)="onOpcUaServerClick(opcUaServer.name)">
             {{opcUaServer.name}}
