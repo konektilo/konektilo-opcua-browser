@@ -42,6 +42,9 @@ export class NodeCardPopoverComponent implements OnInit {
         this.savedNode.savedAsFavorite = false;
         await this.savedNodesStorageService.saveNode(this.savedNode);
         break;
+      case PopoverAction.CopyKonektiloUrl:
+        await this.copyToClipboard();
+        break;
     }
 
     await this.popoverController.dismiss({action: popoverAction});
