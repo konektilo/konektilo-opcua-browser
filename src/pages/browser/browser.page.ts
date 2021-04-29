@@ -14,7 +14,7 @@ import {ViewWillEnter} from '@ionic/angular';
 })
 export class BrowserPage implements ViewWillEnter {
   selectedBrowseNode: KonektiloBrowseNodeInternal;
-  opcUaServer: KonektiloOpcUaServer[] = [];
+  opcUaServers: KonektiloOpcUaServer[] = [];
   selectedOpcUaServer: KonektiloOpcUaServer;
 
   treeControl = new FlatTreeControl<KonektiloBrowseNodeInternal>(
@@ -32,8 +32,12 @@ export class BrowserPage implements ViewWillEnter {
   constructor(public konektiloBrowser: KonektiloBrowserService, public treeDataService: TreeDataService, public storage: Storage) {
   }
 
-  ionViewWillEnter() {
-    this.fetchOpcUaServers();
+  async ionViewWillEnter() {
+    await this.fetchOpcUaServers();
+
+    if (this.opcUaServers.length > 0 && this.selectedOpcUaServer === undefined) {
+      this.selectedOpcUaServer = this.opcUaServers[0];
+    }
 
     if (this.selectedOpcUaServer !== undefined) {
       this.treeDataService.getInitialTree(this.selectedOpcUaServer).then(initialTree => this.dataSource.data = initialTree);
@@ -50,11 +54,16 @@ export class BrowserPage implements ViewWillEnter {
     this.selectedBrowseNode = browseNode;
   }
 
-  fetchOpcUaServers() {
-    this.opcUaServer = [];
-    this.konektiloBrowser.readOpcUaServer().then(konektiloResponse => {
-      Object.keys(konektiloResponse.result).forEach(opcUaServer => this.opcUaServer.push(konektiloResponse.result[opcUaServer]));
-    });
+  async fetchOpcUaServers() {
+    this.opcUaServers = [];
+    const konektiloResponse = await this.konektiloBrowser.readOpcUaServer();
+
+    if (konektiloResponse.result !== undefined) {
+      Object.keys(konektiloResponse.result).forEach(opcUaServerKey => this.opcUaServers.push(konektiloResponse.result[opcUaServerKey]));
+    }
+    // this.konektiloBrowser.readOpcUaServer().then(konektiloResponse => {
+    //   Object.keys(konektiloResponse.result).forEach(opcUaServerKey => this.opcUaServers.push(konektiloResponse.result[opcUaServerKey]));
+    // });
   }
 
   selectOpcUaServer() {

@@ -6,8 +6,8 @@
       <ion-item>
         <ion-label class="customLabel">Selected OPC-UA server</ion-label>
         <ion-select interface="action-sheet" [(ngModel)]="selectedOpcUaServer" [compareWith]="compareOpcUaServer"
-                    (ionChange)="selectOpcUaServer()" [value]="opcUaServer[0]">
-          <ion-select-option *ngFor="let server of opcUaServer" [value]="server">{{server.name}}</ion-select-option>
+                    (ionChange)="selectOpcUaServer()">
+          <ion-select-option *ngFor="let server of opcUaServers" [value]="server">{{server.name}}</ion-select-option>
         </ion-select>
       </ion-item>
 
